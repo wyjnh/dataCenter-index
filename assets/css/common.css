@@ -1,0 +1,18 @@
+html {
+	height: 100%;
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+* {
+	padding: 0;
+  margin: 0;
+}
+body{height: 100%;position: relative;}
+ul li{list-style: none}
+a{text-decoration: none;}
+.hide{
+	display: none !important;
+}
+.fr{float: right;}
+.fl{float: left;}
