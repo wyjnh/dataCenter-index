@@ -28,12 +28,25 @@
     /*padding: 20px;*/
     display: inline-block;
  }
- .drag_item_box{
-    padding: 0;
-    /*padding: 0px 10px 10px 10px;*/
+ .drag_item_header{
+        width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 15%;
+    line-height: 15%;
  }
- .drag_item_box >input{
-    border: none;
+ .drag_item_move{
+   cursor: move;
+    float: left;
+    width: 30%;
+    height: 30px;
+ }
+
+ .drag_item_header >input{
+   border: none;
+    display: inline-block;
+    height: 100%;
+    text-align: center;
  }
  .drag_item .close_btn{
     position: absolute;
@@ -42,11 +55,14 @@
     font-size: 25px;
     cursor: pointer;
  }
- .drag_item_move{
-   cursor: move;
-    width: 30%;
-    height: 30px;
+ .drag_item_box{
+    padding: 10px;
+    width: 100%;
+    height: 85%;
+    box-sizing: border-box;
  }
+
+
  .drag_controller_list{
     width: 100%;
  }
@@ -62,5 +78,5 @@
  }
 
  .chart_type1{
-    width: 400px;height: 100px;position: absolute;top: 0;left: 0
+    width: 400px;height: 270px;position: absolute;top: 0;left: 0
  }

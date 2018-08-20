@@ -8,16 +8,8 @@ function drag(){
       	},
         drag: function(e) {
           var dragContent=document.getElementById('drag_content');
-          // console.log(dragContent.clientHeight)//380
-          // console.log(e.target.clientHeight)//100
-		  // var dragContentHeight=dragContent.offsetLeft;
-	      // var dragContentY=dragContent.offsetTop;
-          // console.log(e.target.style.top);
-          // console.log(parseInt(e.target.style.top)+parseInt(e.target.clientHeight)+10)
           if(parseInt(e.target.style.top)+parseInt(e.target.clientHeight)+10>=parseInt(dragContent.clientHeight)){
           	var h=parseInt($(".drag_container").height())+50+"px";
-          	
-          	// console.log(h);
           	$(".drag_container").css("height",h)
           }
         },
@@ -31,18 +23,92 @@ function drag(){
       handles:"n, e, s, w" });
 }
 drag();
-// 点击添加图表
-$("#chart_type1").click(function(){
+// 点击添加柱形图表
+var barChartNum=0;
+var lineChartNum=0;
+var scatterChartNum=0;
+$("#add_bar_chart").click(function(){
+	createChart('bar');	
+})
+
+$("#add_line_chart").click(function(){
+	createChart('line');	
+})
+$("#add_scatter_chart").click(function(){
+	createChart('scatter');	
+})
+function createChart(type){
+	var chartNum,chartName;
+	switch(type)
+	{
+	case 'bar':
+	  barChartNum++;
+	  chartNum="bar_chart_"+barChartNum;
+	  chartName="新柱形图"
+	  break;
+	case 'line':
+	  lineChartNum++;
+	  chartNum="line_chart_"+lineChartNum;
+	  chartName="新折线图"
+	  break;
+	case 'scatter':
+	  scatterChartNum++;
+	  chartNum="scatter_chart_"+scatterChartNum;
+	  chartName="新散点图"
+	  break;
+	default:
+	  break;
+	}
+
 	var chartType1=document.createElement("div");
 	chartType1.className="drag_item chart_type1";
-	chartType1.innerHTML="<div class='drag_item_move'></div>"+
-          "<div class='close_btn' style='display:none'><i class='fa fa-minus-circle' aria-hidden='true'></i></div>"+
-          "<div class='drag_item_box'><input value='新页面' style='border:none'/></div>";
+	chartType1.innerHTML='<div class="drag_item_header"><div class="drag_item_move"></div>'+
+	'<input value="'+chartName+'"></div>'+
+	'<div class="close_btn" style="display: none;"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>'+
+	'<div class="drag_item_box" id="'+chartNum+'"></div>';
 	$("#drag_content").append(chartType1);
 	$(".close_btn").hide();
 	drag();
 	deleteFn();
-})
+	drawCharts(chartNum,type)
+}
+// 导入echarts图表
+function drawCharts(id,type){
+	var chart = echarts.init(document.getElementById(id));
+    window.onresize = chart.resize;
+    var option=setCharts(type);
+    chart.setOption(option,true);
+}
+// 设置图标的参数
+function setCharts(type){
+    var myChart_1;
+    var data1=new Array();
+    var data2=new Array();
+    for(var i=0;i<20;i++){//525600
+    data2[i]=Math.random()*10000;
+    data1[i]='xt'+i;
+    }
+    var option = {
+        xAxis: {
+            type: 'category',
+            data:data1
+        },
+        yAxis: {
+            type: 'value'
+        },
+        animation:false,
+        tooltip:{show:true,trigger: 'axis'},
+        series: [{
+            data:data2,
+            // type: 'bar',
+            // type: 'line',
+            type: type,
+            // type: 'scatter',
+        }]
+    }; 
+    return option;
+}
+
 // 保存位置信息事件
 $("#chart_save").click(function(){
 	var itemsInfo=[];
@@ -62,7 +128,7 @@ function getItemInfo(obj){
 	var dragContent=document.getElementById('drag_content');
 	var dragContentX=dragContent.offsetLeft;
 	var dragContentY=dragContent.offsetTop;
-	var objHtml=$(obj).find(".drag_item_box>input").val();
+	var objHtml=$(obj).find(".drag_item_header>input").val();
 	var className=obj.className.split(" ")[1];
 	var obj=obj.getBoundingClientRect();
 	var info={
