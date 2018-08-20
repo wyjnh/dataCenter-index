@@ -2,7 +2,7 @@
     height: 600px;
     width: 70%;
     /*overflow: hidden;*/
-    margin: 50px auto;
+    margin: 0px auto;
     border: 1px solid #e6e4e4;
 }
 .drag_controller{
@@ -12,7 +12,7 @@
     float: left;
 }
 .drag_content{
-    overflow: auto;
+    overflow: hidden;
 	/*padding: 20px;*/
 	width: 95%;
     height: 100%;

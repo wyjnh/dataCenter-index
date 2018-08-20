@@ -1,10 +1,34 @@
 var saveInfo="";
 // 拖拽，拉伸事件
 function drag(){
-	
-	$( ".drag_item" ).draggable({ scroll: true });
-	// $( ".drag_item" ).draggable({ containment: "#drag_content" });
-	$( ".drag_item" ).resizable();
+	$( ".drag_item" ).draggable({
+		containment: "#drag_content",
+		start: function() {
+      
+      	},
+        drag: function(e) {
+          var dragContent=document.getElementById('drag_content');
+          // console.log(dragContent.clientHeight)//380
+          // console.log(e.target.clientHeight)//100
+		  // var dragContentHeight=dragContent.offsetLeft;
+	      // var dragContentY=dragContent.offsetTop;
+          // console.log(e.target.style.top);
+          // console.log(parseInt(e.target.style.top)+parseInt(e.target.clientHeight)+10)
+          if(parseInt(e.target.style.top)+parseInt(e.target.clientHeight)+10>=parseInt(dragContent.clientHeight)){
+          	var h=parseInt($(".drag_container").height())+50+"px";
+          	
+          	// console.log(h);
+          	$(".drag_container").css("height",h)
+          }
+        },
+        stop: function() {
+        
+        },
+    });
+	$( ".drag_item" ).resizable({
+      minHeight: 50,
+      minWidth: 50,
+      handles:"n, e, s, w" });
 }
 drag();
 // 点击添加图表
@@ -46,8 +70,6 @@ function getItemInfo(obj){
 		"type":className,
 		"width":obj.width,
 		"height":obj.height,
-		// "left":obj.left,
-		// "top":obj.top
 		"left":obj.left-dragContentX,
 		"top":obj.top-dragContentY
 	};
