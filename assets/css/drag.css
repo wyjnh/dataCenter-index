@@ -36,24 +36,37 @@
     line-height: 15%;
  }
  .drag_item_move{
-   cursor: move;
+    cursor: move;
     float: left;
     width: 30%;
-    height: 30px;
+    height: 100%;
  }
 
  .drag_item_header >input{
-   border: none;
+        width: 35%;
+    border: none;
     display: inline-block;
     height: 100%;
     text-align: center;
  }
- .drag_item .close_btn{
-    position: absolute;
-    top: -10px;
-    right: -5px;
-    font-size: 25px;
+ .drag_item .drag_item_header_action_list{
+        width: 35%;
+    color: #e6e6e6;
+    height: 100%;
+    display: flex;
+    float: right;
+    font-size: 20px;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10px;
+    box-sizing: border-box;
+ }
+ .drag_item_header_action_list> i{
     cursor: pointer;
+    margin: 0 2px;
+ }
+.drag_item_header_action_list> i:hover{
+    color: #999;
  }
  .drag_item_box{
     padding: 10px;

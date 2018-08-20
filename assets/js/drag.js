@@ -63,11 +63,15 @@ function createChart(type){
 	var chartType1=document.createElement("div");
 	chartType1.className="drag_item chart_type1";
 	chartType1.innerHTML='<div class="drag_item_header"><div class="drag_item_move"></div>'+
-	'<input value="'+chartName+'"></div>'+
-	'<div class="close_btn" style="display: none;"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>'+
-	'<div class="drag_item_box" id="'+chartNum+'"></div>';
+	'<input value="'+chartName+'">'+
+	'<div class="drag_item_header_action_list" style="display: none;">'+
+	'<i class="fa fa-minus-square-o minsize_btn" aria-hidden="true"></i>'+
+	'<i class="fa fa-plus-square-o maxsize_btn" aria-hidden="true"></i>'+
+	'<i class="fa fa-times close_btn" aria-hidden="true"></i>'+
+	'</div></div><div class="drag_item_box" id="'+chartNum+'"></div>';
+	console.log("s")
 	$("#drag_content").append(chartType1);
-	$(".close_btn").hide();
+	$(".drag_item_header_action_list").hide();
 	drag();
 	deleteFn();
 	drawCharts(chartNum,type)
@@ -142,21 +146,33 @@ function getItemInfo(obj){
 	return info;
 }
 
-// 删除表格
+// 表格操作栏
 var showDelete=false;
-$("#chart_delete").click(function(){
-	// console.log(showDelete)
+$("#chart_action").click(function(){
 	showDelete=!showDelete;
+	console.log(showDelete)
 	if(showDelete){
-		$(".close_btn").show();
+		$(".drag_item_header_action_list").show();
 		deleteFn();
+		reSizeFn();
 	}else{
-		$(".close_btn").hide();
+		$(".drag_item_header_action_list").hide();
 	}
 })
 function deleteFn(){
 	$(".close_btn").click(function(e){
-		$(this).parent().remove();
+		$(this).parent().parent().parent().remove();
+	})
+}
+function reSizeFn(){
+	$(".maxsize_btn").click(function(){
+		var echartDiv=$(this).parent().parent().parent()
+		var height=$(echartDiv).height();
+		var width=$(echartDiv).width();
+		var top=$(echartDiv).css('top');
+		var left=$(echartDiv).css('left');
+		// console.log(height+" "+width+" "+left+" "+top);
+		$(echartDiv).css({"top":"0","left":"0","height":"100%","width":"100%"});
 	})
 }
 
@@ -176,7 +192,14 @@ function initFn(){
 		$(dragItem).addClass(saveData[i].type);
 		$(dragItem).css({"height":saveData[i].height,"left":saveData[i].left,
 						"top":saveData[i].top,"width":saveData[i].width,"position":"absolute"})
-		dragItem.innerHTML='<div class="drag_item_move"></div><div class="close_btn" style="display:none"><i class="fa fa-minus-circle" aria-hidden="true"></i></div><div class="drag_item_box"><input value="'+saveData[i].val+'">';
+		dragItem.innerHTML='<div class="drag_item_header"><div class="drag_item_move"></div>'+
+		'<input value="'+saveData[i].val+'">'+
+		'<div class="drag_item_header_action_list" style="display: none;">'+
+		'<i class="fa fa-minus-square-o minsize_btn" aria-hidden="true"></i>'+
+		'<i class="fa fa-plus-square-o maxsize_btn" aria-hidden="true"></i>'+
+		'<i class="fa fa-times close_btn" aria-hidden="true"></i>'+
+		'</div></div>'+
+		'<div class="drag_item_box" id="chart_type1_0"></div>';
 		$("#drag_content").append(dragItem);
 	}
 	drag();
