@@ -1,7 +1,7 @@
 var displayLevel1=false;
 var displayLevel2=false;
 var displayLevel3=false;
-$("#nav_show_btn").mouseenter(function(){
+$("#nav_show_btn").click(function(){
   // console.log(displayLevel1);
   //   if(!displayLevel1){
       displayLevel1=true;

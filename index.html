@@ -10,10 +10,6 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/header.css">
     <link rel="stylesheet" type="text/css" href="assets/css/content.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/drag.css" />
-
-    <!-- <link rel="stylesheet" type="text/css" href="assets/components/drag/dragula.min.css" /> -->
-    <!-- <script type="text/javascript" src="assets/components/drag/dragula.min.js"></script> -->
-
 </head>
 <body class="blue-skin">
     <div class="commonHeader" style="background: #F0F2F3;">
@@ -308,22 +304,26 @@
     </ul>
   </div>
 </div>
+    <textarea type="text" id="drag_item_info_arr"></textarea>
   <div class="drag_container">
     <div class="drag_controller">
       <ul class="drag_controller_list">
-        <li title="点击添加图标" id="chart_type1">
+        <li title="点击添加图表" id="chart_type1">
           <i class="fa fa-file-image-o" aria-hidden="true"></i>        
         </li>
-        <li title="点击保存状态" id="chart_save">
+        <li title="点击保存图表状态" id="chart_save">
           <i class="fa fa-folder" aria-hidden="true"></i>        
+        </li>
+        <li title="点击退回上次图表状态" id="chart_return">
+          <i class="fa fa-mail-reply" aria-hidden="true"></i>        
+        </li>
+        <li title="点击删除图表" id="chart_delete">
+          <i class="fa fa-shopping-basket" aria-hidden="true"></i>        
         </li>
       </ul>
     </div>
   	<div class="drag_content" id="drag_content" style="position: relative;">
-        <div class="drag_item chart_type1" style="top:30px;left: 40%;">
-          <div class="close_btn"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>
-          <div class="drag_item_box">客户总数</div>
-        </div>
+        <div class="drag_item chart_type1" style="top:30px;left: 40%;"><div class="drag_item_move"></div><div class="close_btn" style="display: none;"><i class="fa fa-minus-circle" aria-hidden="true"></i></div><div class="drag_item_box"><input value="旧页面"></div>
   	</div>
   </div>
 <script type="text/javascript" src="./assets/js/jquery.js"></script>

@@ -1,7 +1,7 @@
 .drag_container{
-    height: 70%;
+    height: 600px;
     width: 70%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     margin: 50px auto;
     border: 1px solid #e6e4e4;
 }
@@ -21,12 +21,18 @@
 .drag_item{
     color: #999;
     margin: 5px;
-	cursor:move; 
+	/*cursor:move; */
  	width: 100px;
     box-shadow: 0 0 5px #999;
     float: left;
-    padding: 20px;
+    /*padding: 20px;*/
     display: inline-block;
+ }
+ .drag_item_box{
+    padding: 0px 10px 10px 10px;
+ }
+ .drag_item_box >input{
+    border: none;
  }
  .drag_item .close_btn{
     position: absolute;
@@ -34,6 +40,11 @@
     right: -5px;
     font-size: 25px;
     cursor: pointer;
+ }
+ .drag_item_move{
+   cursor: move;
+    width: 30%;
+    height: 30px;
  }
  .drag_controller_list{
     width: 100%;
