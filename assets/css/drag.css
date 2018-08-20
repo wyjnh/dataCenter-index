@@ -21,7 +21,7 @@
 .drag_item{
     color: #999;
     margin: 5px;
-	/*cursor:move; */
+	cursor:move; 
  	width: 100px;
     box-shadow: 0 0 5px #999;
     float: left;
@@ -29,7 +29,8 @@
     display: inline-block;
  }
  .drag_item_box{
-    padding: 0px 10px 10px 10px;
+    padding: 0;
+    /*padding: 0px 10px 10px 10px;*/
  }
  .drag_item_box >input{
     border: none;
