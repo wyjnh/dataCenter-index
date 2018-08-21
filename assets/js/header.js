@@ -6,7 +6,7 @@
  })
 
  // 我的收藏
-  $("#my_collect_btn").mouseover(function(){
+  $("#my_collect_btn").click(function(){
     $(".header-card").slideDown(100);
   })
   $(".header-card").mouseleave(function(){
@@ -14,22 +14,22 @@
     $(".menu-container>ul>li").attr("class","");
   })
   // 个人信息弹框
-  $("#header_userinfo_btn").mouseenter(function () {
-      $("#header_add_userinfo_box1").slideDown(100);
+  $("#header_userinfo_btn").click(function () {
+      $("#header_add_userinfo_box1").slideToggle(100);
       $("#header_add_userinfo_box2").slideUp();
   })
-  $("#header_add_userinfo_box1").mouseleave(function () {
-      $("#header_add_userinfo_box1").slideUp(100);
-  })
+  // $("#header_add_userinfo_box1").mouseleave(function () {
+  //     $("#header_add_userinfo_box1").slideUp(100);
+  // })
 
   // 公告弹框
-  $("#header_notice_info_btn").mouseenter(function(){
-    $("#header_add_userinfo_box2").slideDown(200);
+  $("#header_notice_info_btn").click(function(){
+    $("#header_add_userinfo_box2").slideToggle(200);
     $("#header_add_userinfo_box1").slideUp();
   })
-  $("#header_add_userinfo_box2").mouseleave(function(){
-    $("#header_add_userinfo_box2").slideUp(200);
-  })
+  // $("#header_add_userinfo_box2").mouseleave(function(){
+  //   $("#header_add_userinfo_box2").slideUp(200);
+  // })
   
   $(".header_add_notice_list>li").mouseenter(function(e){
     var target=e.target;
