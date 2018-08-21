@@ -7,15 +7,11 @@ function drag(){
       
       	},
         drag: function(e) {
-          // var dragContent=document.getElementById('drag_content');
-          // if(parseInt(e.target.style.top)+parseInt(e.target.clientHeight)+30>=parseInt(dragContent.clientHeight)){
-          // 	var h=parseInt($(".drag_container").height())+50+"px";
-          // 	$(".drag_container").css("height",h)
-          // }
+        
         },
         stop: function() {
         	console.log(this);
-        	updataChartInfo(this)
+        	updateChartInfo(this)
         },
     });
 	$( ".drag_item" ).resizable({
@@ -30,7 +26,7 @@ function drag(){
       },	
       stop: function() {
       	// console.log(this);
-       	updataChartInfo(this)
+       	updateChartInfo(this)
        },
     });
 }
@@ -48,6 +44,19 @@ $("#add_line_chart").click(function(){
 $("#add_scatter_chart").click(function(){
 	createChart('scatter');	
 })
+// 保存位置信息事件
+$("#chart_save").click(function(){
+	var itemsInfo=[];
+	var items=$("#drag_content>.drag_item");
+	for(var i=0;i<items.length;i++){
+		var info=getItemInfo(items[i]);
+		itemsInfo.push(info);
+	}
+	saveInfo=JSON.stringify(itemsInfo);
+	$("#drag_item_info_arr").val(itemsInfo);
+	alert("保存成功");
+})
+// 创建echarts
 function createChart(type){
 	var chartNum,chartName;
 	switch(type)
@@ -70,24 +79,23 @@ function createChart(type){
 	default:
 	  break;
 	}
-	var chartType1=document.createElement("div");
+	var chartType1 = document.createElement("div");
 	chartType1.id=chartNum;
 	chartType1.className="drag_item chart_type1";
 	chartType1.innerHTML='<div class="drag_item_header">'+
 	'<input type="hidden" class="echart_data"/>'+
 	'<div class="drag_item_move"></div>'+
 	'<input class="title" value="'+chartName+'">'+
-	'<div class="drag_item_header_action_list" style="display: none;">'+
-	'<i class="fa fa-minus-square-o minsize_btn" aria-hidden="true"></i>'+
-	'<i class="fa fa-plus-square-o maxsize_btn" aria-hidden="true"></i>'+
-	'<i class="fa fa-times close_btn" aria-hidden="true"></i>'+
+	'<div class="drag_item_header_action_list">'+
+	'<i class="fa fa-minus-square-o minsize_btn" data-type="min" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
+	'<i class="fa fa-plus-square-o maxsize_btn" data-type="max" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
+	'<i class="fa fa-times close_btn" data-type="close" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
 	'</div></div><div class="drag_item_box" id="'+chartNum+'_div'+'"></div>';
 	$("#drag_content").append(chartType1);
-	updataChartInfo(chartType1);
-	$(".drag_item_header_action_list").hide();
+	updateChartInfo(chartType1);
 	drag();
-	deleteFn();
-	drawCharts(chartNum+'_div',type)
+	bindEvent();
+	drawCharts(chartNum+'_div',type);
 }
 // 导入echarts图表
 function drawCharts(id,type){
@@ -116,27 +124,12 @@ function setCharts(type){
         tooltip:{show:true,trigger: 'axis'},
         series: [{
             data:data2,
-            // type: 'bar',
-            // type: 'line',
             type: type,
-            // type: 'scatter',
         }]
     }; 
     return option;
 }
 
-// 保存位置信息事件
-$("#chart_save").click(function(){
-	var itemsInfo=[];
-	var items=$("#drag_content>.drag_item");
-	for(var i=0;i<items.length;i++){
-		var info=getItemInfo(items[i]);
-		itemsInfo.push(info);
-	}
-	saveInfo=JSON.stringify(itemsInfo);
-	$("#drag_item_info_arr").val(itemsInfo);
-	alert("保存成功");
-})
 // 获取一个chart的信息
 function getItemInfo(obj){
 	console.log(typeof $(obj).find(".echart_data").val())
@@ -158,53 +151,65 @@ function getItemInfo(obj){
 	// return info;
 }
 
-// 表格操作栏
-var showDelete=false;
-$("#chart_action").click(function(){
-	showDelete=!showDelete;
-	if(showDelete){
-		$(".drag_item_header_action_list").show();
-		deleteFn();
-		reSizeFn();
-	}else{
-		$(".drag_item_header_action_list").hide();
-	}
-})
-// 删除图表
-function deleteFn(){
-	$(".close_btn").click(function(e){
-		$(this).parent().parent().parent().remove();
-	})
-	$(".minsize_btn").click(function(){
-		minsizeFn(this);
-	})
-}
-// 最小化事件
-function minsizeFn(e){
-	var obj=$(e).parent().parent().parent();
-	var data=$(obj).find(".echart_data").val();
-	if(!data){
-		alert("此图表已经是最小化！");
-	}else{
-		data=JSON.parse(data);
-		$(obj).css({"height":data.height,"width":data.width,"top":data.top,"left":data.left});
-		$(window).resize();
-		$(".drag_content>.drag_item").show();
-	}
-}
-// 最大化事件
-function reSizeFn(){
-	$(".maxsize_btn").click(function(){
-		$(window).resize();
-		$(".drag_content>.drag_item").hide();
+// 图表时间列表
+function bindEvent(){
+	var $charPannel = $("#drag_content");
+	$charPannel.off('click').on('click', 'i', function(){
+		var type = $(this).attr('data-type'),
+			pid = $(this).attr('data-pid');
+		var $chart = $charPannel.find('#' + pid);
+		switch(type){
+			case 'min':
 
-		var objId=$(this).parent().parent().parent().attr("id");
-		var echartDiv=$(this).parent().parent().parent();
-		$(echartDiv).show();
-		$(echartDiv).css({"top":"0","left":"0","height":"100%","width":"100%"});	
-		$(window).resize();
-	})
+				var data = $chart.find(".echart_data").val();
+				if(!data){
+					alert("此图表已经是最小化！");
+				}else{
+					data=JSON.parse(data);
+					$chart.css({"height":data.height,"width":data.width,"top":data.top,"left":data.left});
+					echarts.getInstanceByDom($chart.find('.drag_item_box')[0]).resize();
+					$(".drag_content > .drag_item").show();
+				}
+
+				break;
+			case 'max':
+				$chart.siblings('div').hide();
+				$chart.css({"height": '100%',"width": '100%',"top": 0,"left": 0}).show();
+				echarts.getInstanceByDom($chart.find('.drag_item_box')[0]).resize();
+				// $chart.draggable("disable");
+				break;
+			case 'close': 
+				$chart.empty().remove();
+				break;
+		}	
+	});
 }
+// // 最小化事件
+// function minsizeFn(e){
+// 	var obj=$(e).parent().parent().parent();
+// 	var data=$(obj).find(".echart_data").val();
+// 	if(!data){
+// 		alert("此图表已经是最小化！");
+// 	}else{
+// 		data=JSON.parse(data);
+// 		$(obj).css({"height":data.height,"width":data.width,"top":data.top,"left":data.left});
+// 		$(window).resize();
+// 		$(".drag_content>.drag_item").show();
+// 	}
+// }
+// // 最大化事件
+// function reSizeFn(){
+// 	$(".maxsize_btn").click(function(){
+// 		$(".drag_content>.drag_item").hide();
+// 		var objId=$(this).parent().parent().parent().attr("id");
+// 		var echartDiv=$(this).parent().parent().parent();
+// 		console.log(echartDiv)
+// 		$(echartDiv).show();
+// 		// $(window).resize();
+// 		$(echartDiv).css({"top":"0","left":"0","height":"100%","width":"100%"});	
+// 		$(window).resize();
+// 	})
+// }
 
 // 初始化页面
 function initFn(){
@@ -225,24 +230,24 @@ function initFn(){
 		'<input type="hidden" class="echart_data"/>'+
 		'<div class="drag_item_move"></div>'+
 		'<input class="title" value="'+saveData[i].title+'">'+
-		'<div class="drag_item_header_action_list" style="display: none;">'+
-		'<i class="fa fa-minus-square-o minsize_btn" aria-hidden="true"></i>'+
-		'<i class="fa fa-plus-square-o maxsize_btn" aria-hidden="true"></i>'+
-		'<i class="fa fa-times close_btn" aria-hidden="true"></i>'+
+		'<div class="drag_item_header_action_list">'+
+		'<i class="fa fa-minus-square-o minsize_btn" data-type="min" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
+		'<i class="fa fa-plus-square-o maxsize_btn" data-type="max" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
+		'<i class="fa fa-times close_btn" data-type="close" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
 		'</div></div><div class="drag_item_box" id="'+saveData[i].id+'_div'+'"></div>';
 		$(dragItem).css({"height":saveData[i].height,"left":saveData[i].left,
 						"top":saveData[i].top,"width":saveData[i].width,"position":"absolute"})
 		$("#drag_content").append(dragItem);
 	}
 	drag();
-	deleteFn();
+	bindEvent();
 };
 $("#chart_return").click(function(){
 	initFn();
 });
 
 // 更新图表信息
-function updataChartInfo(obj){
+function updateChartInfo(obj){
 	var data={}
 	data.id=$(obj).attr("id");
 	data.title=$(obj).find(".title").val();
