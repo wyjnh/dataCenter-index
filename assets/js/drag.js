@@ -56,6 +56,19 @@ $("#chart_save").click(function(){
 	$("#drag_item_info_arr").val(itemsInfo);
 	alert("保存成功");
 })
+
+// 添加区域位置
+$("#chart_bigger").click(function(){
+	var height=$(".drag_container").height();
+	$(".drag_container").css("height",height+50)
+})
+$("#chart_smaller").click(function(){
+	var height=$(".drag_container").height();
+	if(height>=600){
+		$(".drag_container").css("height",height-50)
+	}
+})
+
 // 创建echarts
 function createChart(type){
 	var chartNum,chartName;
