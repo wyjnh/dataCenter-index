@@ -38,10 +38,12 @@
     background: #999;
     float: left;
 }
-.drag_content{
+.drag_content_grid{
     background-color: rgb(242, 242, 242);
 background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 0px), linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 0px);
 background-size: 15px 15px;
+}
+.drag_content{
     overflow: hidden;
 	/*padding: 20px;*/
 	width: 95%;

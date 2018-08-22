@@ -89,6 +89,11 @@ $("#chart_save").click(function(){
 $("#chart_return").click(function(){
 	initFn();
 });
+// 切换网格背景
+$("#chart_grid").click(function(){
+	$(".drag_content").toggleClass("drag_content_grid");
+})
+
 // 添加区域位置
 $("#chart_bigger").click(function(){
 	var height=$(".drag_container").height();
