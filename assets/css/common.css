@@ -16,3 +16,7 @@ a{text-decoration: none;}
 }
 .fr{float: right;}
 .fl{float: left;}
+
+.transparent_bg{
+	background: inherit;
+}
