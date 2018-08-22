@@ -56,7 +56,10 @@ $("#chart_save").click(function(){
 	$("#drag_item_info_arr").val(itemsInfo);
 	alert("保存成功");
 })
-
+// 初始化历史记录
+$("#chart_return").click(function(){
+	initFn();
+});
 // 添加区域位置
 $("#chart_bigger").click(function(){
 	var height=$(".drag_container").height();
@@ -66,6 +69,8 @@ $("#chart_smaller").click(function(){
 	var height=$(".drag_container").height();
 	if(height>=600){
 		$(".drag_container").css("height",height-50)
+	}else{
+		alert("已经是最小值！")
 	}
 })
 
@@ -197,32 +202,6 @@ function bindEvent(){
 		}	
 	});
 }
-// // 最小化事件
-// function minsizeFn(e){
-// 	var obj=$(e).parent().parent().parent();
-// 	var data=$(obj).find(".echart_data").val();
-// 	if(!data){
-// 		alert("此图表已经是最小化！");
-// 	}else{
-// 		data=JSON.parse(data);
-// 		$(obj).css({"height":data.height,"width":data.width,"top":data.top,"left":data.left});
-// 		$(window).resize();
-// 		$(".drag_content>.drag_item").show();
-// 	}
-// }
-// // 最大化事件
-// function reSizeFn(){
-// 	$(".maxsize_btn").click(function(){
-// 		$(".drag_content>.drag_item").hide();
-// 		var objId=$(this).parent().parent().parent().attr("id");
-// 		var echartDiv=$(this).parent().parent().parent();
-// 		console.log(echartDiv)
-// 		$(echartDiv).show();
-// 		// $(window).resize();
-// 		$(echartDiv).css({"top":"0","left":"0","height":"100%","width":"100%"});	
-// 		$(window).resize();
-// 	})
-// }
 
 // 初始化页面
 function initFn(){
@@ -255,13 +234,12 @@ function initFn(){
 	drag();
 	bindEvent();
 };
-$("#chart_return").click(function(){
-	initFn();
-});
+
 
 // 更新图表信息
 function updateChartInfo(obj){
 	var data={}
+	data.type=$(obj).attr("id").split("_")[0];
 	data.id=$(obj).attr("id");
 	data.title=$(obj).find(".title").val();
 	data.height=$(obj).height();

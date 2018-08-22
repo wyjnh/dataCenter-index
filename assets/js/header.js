@@ -24,7 +24,7 @@
 
   // 公告弹框
   $("#header_notice_info_btn").click(function(){
-    $("#header_add_userinfo_box2").slideToggle(200);
+    $("#header_add_userinfo_box2").slideToggle(100);
     $("#header_add_userinfo_box1").slideUp();
   })
   // $("#header_add_userinfo_box2").mouseleave(function(){
