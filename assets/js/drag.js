@@ -4,7 +4,7 @@ function drag(){
 	$( ".drag_item" ).draggable({
 		containment: "#drag_content",
 		start: function() {
-      
+
       	},
         drag: function(e) {
         	updateChartInfo(this)
@@ -135,8 +135,8 @@ function createChart(type,left,top){
 	'<div class="drag_item_move"></div>'+
 	'<input class="title" value="'+chartName+'">'+
 	'<div class="drag_item_header_action_list">'+
-	'<i class="fa fa-minus-square-o minsize_btn" data-type="min" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
-	'<i class="fa fa-plus-square-o maxsize_btn" data-type="max" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
+	'<i class="fa fa-window-minimize minsize_btn" data-type="min" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
+	'<i class="fa fa-window-restore maxsize_btn" data-type="max" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
 	'<i class="fa fa-times close_btn" data-type="close" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
 	'</div></div><div class="drag_item_box" id="'+chartNum+'_div'+'"></div>';
 	$("#drag_content").append(chartType1);
@@ -256,8 +256,8 @@ function initFn(){
 		'<div class="drag_item_move"></div>'+
 		'<input class="title" value="'+saveData[i].title+'">'+
 		'<div class="drag_item_header_action_list">'+
-		'<i class="fa fa-minus-square-o minsize_btn" data-type="min" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
-		'<i class="fa fa-plus-square-o maxsize_btn" data-type="max" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
+		'<i class="fa fa-window-minimize minsize_btn" data-type="min" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
+		'<i class="fa fa-window-restore maxsize_btn" data-type="max" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
 		'<i class="fa fa-times close_btn" data-type="close" data-pid="' + saveData[i].id + '" aria-hidden="true"></i>'+
 		'</div></div><div class="drag_item_box" id="'+saveData[i].id+'_div'+'"></div>';
 		$(dragItem).css({"height":saveData[i].height,"left":saveData[i].left,
