@@ -3,19 +3,19 @@
 function drag(){
 	$( ".drag_item" ).draggable({
 		containment: "#drag_content",
+		opacity:0.35,
 		start: function() {
 
       	},
         drag: function(e) {
-        	updateChartInfo(this)
-        	var info=JSON.parse($(this).find(".echart_data").val());
-        	var bottom=parseInt(info.bottom);
-        	console.log(bottom)
-        	if(bottom<=0){
-        		var height=$(".drag_container").height();
-        		height=height+5+"px";
-        		$(".drag_container").css("height",height)
-        	}
+        	// var info = JSON.parse($(this).find(".echart_data").val());
+        	// var bottom = parseInt(info.bottom);
+        	// //console.log(bottom);
+
+        	// if(bottom <= 0){
+        	// 	$(".drag_container").css("height", ($(".drag_container").height() * 1 + 50) + 'px');
+        	// }
+        	// updateChartInfo(this);
         	// console.log(typeof );
         },
         stop: function() {
@@ -26,7 +26,8 @@ function drag(){
 	$( ".drag_item" ).resizable({
       minHeight: 50,
       minWidth: 50,
-      handles:"n, e, s, w",
+      // n，e，s，w，ne，se，sw，nw
+      handles:"se,sw,nw,ne,n,e,s,w",
       start: function() {
       
       	},
@@ -34,7 +35,6 @@ function drag(){
 
       },	
       stop: function() {
-      	// console.log(this);
        	updateChartInfo(this)
        },
     });
@@ -96,7 +96,7 @@ $("#chart_bigger").click(function(){
 })
 $("#chart_smaller").click(function(){
 	var height=$(".drag_container").height();
-	if(height>=600){
+	if(height>=650){
 		$(".drag_container").css("height",height-50)
 	}else{
 		alert("已经是最小值！")
@@ -287,15 +287,16 @@ window.oncontextmenu=function(e){
 
 // 更新图表信息
 function updateChartInfo(obj){
-	var data={}
-	data.type=$(obj).attr("id").split("_")[0];
-	data.id=$(obj).attr("id");
-	data.title=$(obj).find(".title").val();
-	data.height=$(obj).height();
-	data.width=$(obj).width();
-	data.top=$(obj).css("top");
-	data.left=$(obj).css("left");
-	data.bottom=$(obj).css("bottom");
+	var data={};
+
+	data.type = $(obj).attr("id").split("_")[0];
+	data.id = $(obj).attr("id");
+	data.title = $(obj).find(".title").val();
+	data.height = $(obj).height();
+	data.width = $(obj).width();
+	data.top = $(obj).css("top");
+	data.left = $(obj).css("left");
+	data.bottom = $(obj).css("bottom");
 	// console.log(data)
 	$(obj).find(".echart_data").val(JSON.stringify(data));
 }
