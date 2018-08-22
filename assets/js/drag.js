@@ -1,4 +1,4 @@
-var saveInfo="";
+// var saveInfo="";
 // 拖拽，拉伸事件
 function drag(){
 	$( ".drag_item" ).draggable({
@@ -35,9 +35,19 @@ drag();
 var barChartNum=0;
 var lineChartNum=0;
 var scatterChartNum=0;
-$("#add_bar_chart").click(function(){
-	createChart('bar');	
+$("#add_bar_chart").mousedown(function(){
+	$("#drag_content").mousemove(function(){
+		console.log("move")
+
+	})
+	$("#drag_content").mouseup(function(){
+			console.log("up");
+			$("#drag_content").unbind("mousemove");
+		})
 })
+// $("#add_bar_chart").mouseup(function(){
+// 	createChart('bar');	
+// })
 $("#add_line_chart").click(function(){
 	createChart('line');	
 })
@@ -52,8 +62,9 @@ $("#chart_save").click(function(){
 		var info=getItemInfo(items[i]);
 		itemsInfo.push(info);
 	}
-	saveInfo=JSON.stringify(itemsInfo);
-	$("#drag_item_info_arr").val(itemsInfo);
+	// saveInfo=JSON.stringify(itemsInfo);
+	// console.log(itemsInfo)
+	$("#drag_item_info_arr").val("["+itemsInfo+"]");
 	alert("保存成功");
 })
 // 初始化历史记录
@@ -150,7 +161,7 @@ function setCharts(type){
 
 // 获取一个chart的信息
 function getItemInfo(obj){
-	console.log(typeof $(obj).find(".echart_data").val())
+	// console.log(typeof $(obj).find(".echart_data").val())
 	return $(obj).find(".echart_data").val();
 	// var dragContent=document.getElementById('drag_content');
 	// var dragContentX=dragContent.offsetLeft;
@@ -205,16 +216,19 @@ function bindEvent(){
 
 // 初始化页面
 function initFn(){
-	var saveData=saveInfo;
+	var saveData=$("#drag_item_info_arr").val();
+	console.log(saveData)
+	console.log(typeof saveData)
 	if(saveData==""){
 		alert("无保存信息");
 		return;
 	}
 	saveData=JSON.parse(saveData);
-	console.log(saveData)
+	// console.log(saveData)
 	$("#drag_content").html("");
 	for (var i = 0; i < saveData.length; i++) {
-		saveData[i]=JSON.parse(saveData[i]);
+		// saveData[i]=JSON.parse(saveData[i]);
+		console.log(typeof saveData[i])
 		var dragItem=document.createElement("div");
 		dragItem.className="drag_item chart_type1";
 		dragItem.id=saveData[i].id;
@@ -230,6 +244,9 @@ function initFn(){
 		$(dragItem).css({"height":saveData[i].height,"left":saveData[i].left,
 						"top":saveData[i].top,"width":saveData[i].width,"position":"absolute"})
 		$("#drag_content").append(dragItem);
+
+		// 填充echarts信息
+		drawCharts(saveData[i].id+'_div',saveData[i].type);
 	}
 	drag();
 	bindEvent();
