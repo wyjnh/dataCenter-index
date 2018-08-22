@@ -74,6 +74,7 @@ background-size: 15px 15px;
  }
 
  .drag_item_header >input{
+    background: #fff;
         width: 35%;
     border: none;
     display: inline-block;
