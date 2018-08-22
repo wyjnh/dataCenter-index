@@ -39,7 +39,7 @@
     float: left;
 }
 .drag_content_grid{
-    background-color: rgb(242, 242, 242);
+    background-color: #fff;
 background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 0px), linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 0px);
 background-size: 15px 15px;
 }
