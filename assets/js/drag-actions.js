@@ -21,12 +21,12 @@ $("#chart_grid").click(function(){
 // 添加区域位置
 $("#chart_bigger").click(function(){
 	var height=$(".drag_container").height();
-	$(".drag_container").css("height",height+50)
+	$(".drag_container").css("height",height+650)
 })
 $("#chart_smaller").click(function(){
 	var height=$(".drag_container").height();
-	if(height>=650){
-		$(".drag_container").css("height",height-50)
+	if(height>650){
+		$(".drag_container").css("height",height-650)
 	}else{
 		alert("已经是最小值！")
 	}
