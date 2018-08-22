@@ -35,19 +35,27 @@ drag();
 var barChartNum=0;
 var lineChartNum=0;
 var scatterChartNum=0;
-$("#add_bar_chart").mousedown(function(){
-	$("#drag_content").mousemove(function(){
-		console.log("move")
 
-	})
-	$("#drag_content").mouseup(function(){
-			console.log("up");
-			$("#drag_content").unbind("mousemove");
-		})
-})
-// $("#add_bar_chart").mouseup(function(){
-// 	createChart('bar');	
-// })
+var addBarChart=document.getElementById("add_bar_chart");
+var addLineChart=document.getElementById("add_line_chart");
+var addScatterChart=document.getElementById("add_scatter_chart");
+
+dragShowChartsFn(addBarChart,"bar");
+dragShowChartsFn(addLineChart,"line")
+dragShowChartsFn(addScatterChart,"scatter")
+function dragShowChartsFn(obj,type){
+	obj.ondragstart=function(){ // 拖拽开始
+    // console.log('start');
+	}
+	      
+	obj.ondragend=function(e){ // 当拖拽结束 ，清空temp
+	    var x0=parseInt($("#drag_content").offset().left);
+	    var y0=parseInt($("#drag_content").offset().top)
+		createChart(type,(e.clientX-x0),(e.clientY-y0));	
+	}
+}
+
+
 $("#add_line_chart").click(function(){
 	createChart('line');	
 })
@@ -62,8 +70,6 @@ $("#chart_save").click(function(){
 		var info=getItemInfo(items[i]);
 		itemsInfo.push(info);
 	}
-	// saveInfo=JSON.stringify(itemsInfo);
-	// console.log(itemsInfo)
 	$("#drag_item_info_arr").val("["+itemsInfo+"]");
 	alert("保存成功");
 })
@@ -86,7 +92,7 @@ $("#chart_smaller").click(function(){
 })
 
 // 创建echarts
-function createChart(type){
+function createChart(type,left,top){
 	var chartNum,chartName;
 	switch(type)
 	{
@@ -111,6 +117,8 @@ function createChart(type){
 	var chartType1 = document.createElement("div");
 	chartType1.id=chartNum;
 	chartType1.className="drag_item chart_type1";
+	chartType1.style.left=left+"px";
+	chartType1.style.top=top+"px";
 	chartType1.innerHTML='<div class="drag_item_header">'+
 	'<input type="hidden" class="echart_data"/>'+
 	'<div class="drag_item_move"></div>'+
