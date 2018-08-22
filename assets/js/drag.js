@@ -7,10 +7,19 @@ function drag(){
       
       	},
         drag: function(e) {
-        
+        	updateChartInfo(this)
+        	// var info=JSON.parse($(this).find(".echart_data").val());
+        	// var bottom=parseInt(info.bottom);
+        	// console.log(bottom)
+        	// if(bottom<=0){
+        	// 	var height=$(".drag_container").height();
+        	// 	height=height+5+"px";
+        	// 	$(".drag_container").css("height",height)
+        	// }
+        	// console.log(typeof );
         },
         stop: function() {
-        	console.log(this);
+        	// console.log(this);
         	updateChartInfo(this)
         },
     });
@@ -55,7 +64,9 @@ function dragShowChartsFn(obj,type){
 	}
 }
 
-
+$("#add_bar_chart").click(function(){
+	createChart('bar');	
+})
 $("#add_line_chart").click(function(){
 	createChart('line');	
 })
@@ -271,6 +282,7 @@ function updateChartInfo(obj){
 	data.width=$(obj).width();
 	data.top=$(obj).css("top");
 	data.left=$(obj).css("left");
-	console.log(data)
+	data.bottom=$(obj).css("bottom");
+	// console.log(data)
 	$(obj).find(".echart_data").val(JSON.stringify(data));
 }
