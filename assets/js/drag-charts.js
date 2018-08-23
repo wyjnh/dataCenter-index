@@ -7,6 +7,23 @@ function drag(){
 		start: function() {
       	},
         drag: function(e) {
+        	updateChartInfo(this);
+        	var info=JSON.parse($(e.target).find(".echart_data").val());
+        	console.log(info.bottom);
+        	if(parseInt(info.bottom)<=0){
+        		var height=parseInt($(".drag_content").height())+100+"px";
+        		console.log(height);
+        		$(".drag_container").css("height",height);
+        		updateChartInfo(this);
+        		var info=JSON.parse($(e.target).find(".echart_data").val());
+        		console.log(info.bottom);
+        	}
+        	console.log($(".drag_content").height())
+        	if(parseInt(info.bottom)>100&&($(".drag_content").height()>600)){
+        		var height=parseInt($(".drag_content").height())-parseInt(info.bottom)+"px";
+        		console.log(height);
+        		$(".drag_container").css("height",height);
+        	}
         },
         stop: function() {
         	// console.log(this);
@@ -199,6 +216,8 @@ function bindEvent(){
 			case 'close': 
 				$chart.empty().remove();
 				break;
+			default:
+				break;
 		}	
 	});
 }
@@ -223,7 +242,8 @@ function createShape(type,left,top){
 	'<div class="drag_item_move"></div>'+
 	'<div class="drag_item_header_action_list">'+
 	'<i class="fa fa-times close_btn" data-type="close" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
-	'</div></div><div class="drag_item_box" id="'+chartNum+'_div'+'"><textarea class="text_val"></textarea></div>';
+	'<i class="fa fa-repeat rotate_btn" data-type="rotate" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
+	'</div></div><div class="drag_item_box" id="'+chartNum+'_div'+'"><textarea placeholder="请填写" class="text_val"></textarea></div>';
 	  break;
 	default:
 	  break;
@@ -242,7 +262,7 @@ function createShape(type,left,top){
 // 更新图表信息
 function updateChartInfo(obj){
 	console.log('update')
-	console.log(obj)
+	// console.log(obj)
 	var data={};
 	data.type = $(obj).attr("id").split("_")[0];
 	data.id = $(obj).attr("id");

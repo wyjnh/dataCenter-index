@@ -26,12 +26,14 @@ $("#chart_grid").click(function(){
 // 添加区域位置
 $("#chart_bigger").click(function(){
 	var height=$(".drag_container").height();
-	$(".drag_container").css("height",height+650)
+	$(".drag_container").css("height",height+600)
 })
 $("#chart_smaller").click(function(){
 	var height=$(".drag_container").height();
-	if(height>650){
-		$(".drag_container").css("height",height-650)
+	if(height-600>600){
+		$(".drag_container").css("height",height-600);
+	}else if(height-600<600&&height>600){
+		$(".drag_container").css("height",600);
 	}else{
 		alert("已经是最小值！")
 	}
@@ -65,8 +67,10 @@ function initFn(){
 			'<input type="hidden" class="echart_data"/>'+
 			'<div class="drag_item_move"></div>'+
 			'<div class="drag_item_header_action_list">'+
+			
 			'<i class="fa fa-times close_btn" data-type="close" data-pid="' + chartsInfo[i].id + '" aria-hidden="true"></i>'+
-			'</div></div><div class="drag_item_box" id="'+chartsInfo[i].id+'_div'+'"><textarea class="text_val"></textarea></div>';
+			'<i class="fa fa-repeat rotate_btn" data-type="rotate" data-pid="' + chartsInfo[i].id + '" aria-hidden="true"></i>'+
+			'</div></div><div class="drag_item_box" id="'+chartsInfo[i].id+'_div'+'"><textarea placeholder="请填写" class="text_val"></textarea></div>';
 			$("#drag_content").append(dragItem);
 				console.log(chartsInfo[i])
 				$(dragItem).find(".text_val").val(chartsInfo[i].title)
