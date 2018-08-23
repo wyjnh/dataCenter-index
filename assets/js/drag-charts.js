@@ -116,6 +116,7 @@ function createChart(type,left,top){
 }
 // 导入echarts图表
 function drawCharts(id,type){
+	console.log(type);
 	var chart = echarts.init(document.getElementById(id));
     window.onresize = chart.resize;
     var option=setCharts(type);
