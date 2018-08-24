@@ -6,7 +6,7 @@ $("#chart_save").click(function(){
 	itemsInfo.chartGrid=($("#drag_content").hasClass("drag_content_grid")) ? true : false;
 	var items=$("#drag_content>.drag_item");
 	for(var i=0;i<items.length;i++){
-		var info=getItemInfo(items[i]);
+		var info=$(items[i]).find(".echart_data").val();
 		chartsM.push(info);
 	}
 	itemsInfo.chartsInfo=chartsM;
@@ -91,7 +91,7 @@ function initFn(){
 		}
 		
 		$(dragItem).css({"height":chartsInfo[i].height,"left":chartsInfo[i].left,
-						"top":chartsInfo[i].top,"width":chartsInfo[i].width,"position":"absolute"})
+						"top":chartsInfo[i].top,"width":chartsInfo[i].width,"position":"relative"})
 		updateChartInfo(dragItem);
 	}
 	drag();

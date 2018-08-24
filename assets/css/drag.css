@@ -40,12 +40,12 @@
 }
 .drag_content_grid{
     background-color: #fff;
-background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 0px), linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 0px);
-background-size: 15px 15px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 0px), linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 0px);
+    background-size: 15px 15px;
 }
 .drag_content{
+    position: relative;
     overflow: hidden;
-	/*padding: 20px;*/
 	width: 95%;
     height: 100%;
     float: left;
@@ -54,10 +54,9 @@ background-size: 15px 15px;
     background: #fff;
     color: #999;
     margin: 5px;
-	cursor:move; 
+    cursor:move; 
+    position: relative;
  	width: 100px;
-    float: left;
-    /*padding: 20px;*/
     display: inline-block;
  }
  .drag_item_header{
@@ -109,11 +108,15 @@ background-size: 15px 15px;
  }
  .chart_type1{
     box-shadow: 0 0 5px #999;
-    width: 30%;height: 270px;position: absolute;top: 0;left: 0
+    width: 30%;
+    height: 270px;
+    /* position: absolute;top: 0;left: 0 */
  }
  .text_type{
     box-shadow: 0 0 1px #999;
-    width: 30%;height: 50px;position: absolute;top: 0;left: 0
+    width: 30%;
+    height: 50px;
+    /* position: absolute;top: 0;left: 0 */
  }
  .drag_content_resize_div{
     width: 100%;

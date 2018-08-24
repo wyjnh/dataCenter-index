@@ -1,35 +1,9 @@
-// var saveInfo="";
-// 拖拽，拉伸事件
+// 拖拽，拉伸图表事件
 function drag(){
-	$( ".drag_item" ).draggable({
-		containment: "#drag_content",
-		opacity:0.35,
-		start: function() {
-      	},
-        drag: function(e) {
-        	updateChartInfo(this);
-        	var info=JSON.parse($(e.target).find(".echart_data").val());
-        	console.log(info.bottom);
-        	if(parseInt(info.bottom)<=0){
-        		var height=parseInt($(".drag_content").height())+100+"px";
-        		console.log(height);
-        		$(".drag_container").css("height",height);
-        		updateChartInfo(this);
-        		var info=JSON.parse($(e.target).find(".echart_data").val());
-        		console.log(info.bottom);
-        	}
-        	console.log($(".drag_content").height())
-        	if(parseInt(info.bottom)>100&&($(".drag_content").height()>600)){
-        		var height=parseInt($(".drag_content").height())-parseInt(info.bottom)+"px";
-        		console.log(height);
-        		$(".drag_container").css("height",height);
-        	}
-        },
-        stop: function() {
-        	// console.log(this);
-        	updateChartInfo(this)
-        },
-    });
+	// 排序拖拽
+	$( "#drag_content" ).sortable();
+	$( "#drag_content" ).disableSelection();
+	// 拉伸
 	$( ".drag_item" ).resizable({
       minHeight: 50,
       minWidth: 50,
@@ -45,7 +19,6 @@ function drag(){
        },
     });
 }
-drag();
 
 // 点击添加柱形图表
 var barChartNum=0;
@@ -63,77 +36,47 @@ $(addLineChart).click(function(){createChart("line")})
 $(addScatterChart).click(function(){createChart("scatter")})
 $(addText).click(function(){createShape("text")})
 
-
-dragShowChartsFn(addBarChart,"bar");
-dragShowChartsFn(addLineChart,"line")
-dragShowChartsFn(addScatterChart,"scatter")
-dragShowChartsFn(addText,"text")
-
-function dragShowChartsFn(obj,type){
-	obj.ondragstart=function(){ // 拖拽开始
-    // console.log('start');
-	}
-	      
-	obj.ondragend=function(e){ // 当拖拽结束 ，清空temp
-	    var x0=parseInt($("#drag_content").offset().left);
-	    var y0=parseInt($("#drag_content").offset().top)
-	    if(type=="text"){
-	    	createShape(type,(e.clientX-x0),(e.clientY-y0))
-	    }else{
-			createChart(type,(e.clientX-x0),(e.clientY-y0));	
-	    }
-	}
-}
-
-
-
-// 创建echarts
+// 创建echarts容器
 function createChart(type,left,top){
-	var chartNum;
-	// var chartName;
+	var chartId;
 	switch(type)
 	{
-	case 'bar':
-	  barChartNum++;
-	  chartNum="bar_chart_"+barChartNum;
-	  // chartName="新柱形图"
-	  break;
-	case 'line':
-	  lineChartNum++;
-	  chartNum="line_chart_"+lineChartNum;
-	  // chartName="新折线图"
-	  break;
-	case 'scatter':
-	  scatterChartNum++;
-	  chartNum="scatter_chart_"+scatterChartNum;
-	  // chartName="新散点图"
-	  break;
-	default:
-	  break;
+		case 'bar':
+		barChartNum++;
+		chartId="bar_chart_"+barChartNum;
+		break;
+		case 'line':
+		lineChartNum++;
+		chartId="line_chart_"+lineChartNum;
+		break;
+		case 'scatter':
+		scatterChartNum++;
+		chartId="scatter_chart_"+scatterChartNum;
+		break;
+		default:
+		break;
 	}
 	var chartType1 = document.createElement("div");
-	chartType1.id=chartNum;
+	chartType1.id=chartId;
 	chartType1.className="drag_item chart_type1";
-	chartType1.style.left=left+"px";
-	chartType1.style.top=top+"px";
 	chartType1.innerHTML='<div class="drag_item_header">'+
 	'<input type="hidden" class="echart_data"/>'+
 	'<div class="drag_item_move"></div>'+
-	'<input class="title" value="'+chartNum+'" disabled="disabled">'+
+	'<input class="title" value="'+chartId+'" disabled="disabled">'+
 	'<div class="drag_item_header_action_list">'+
-	'<i class="fa fa-window-minimize minsize_btn" data-type="min" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
-	'<i class="fa fa-window-restore maxsize_btn" data-type="max" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
-	'<i class="fa fa-times close_btn" data-type="close" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
-	'</div></div><div class="drag_item_box" id="'+chartNum+'_div'+'"></div>';
+	'<i class="fa fa-window-minimize minsize_btn" data-type="min" data-pid="' + chartId + '" aria-hidden="true"></i>'+
+	'<i class="fa fa-window-restore maxsize_btn" data-type="max" data-pid="' + chartId + '" aria-hidden="true"></i>'+
+	'<i class="fa fa-times close_btn" data-type="close" data-pid="' + chartId + '" aria-hidden="true"></i>'+
+	'</div></div><div class="drag_item_box" id="'+chartId+'_div'+'"></div>';
 	$("#drag_content").append(chartType1);
 	updateChartInfo(chartType1);
 	drag();
 	bindEvent();
-	drawCharts(chartNum+'_div',type);
+	drawCharts(chartId+'_div',type);
 }
 // 导入echarts图表
 function drawCharts(id,type){
-	console.log(type);
+	console.log("创建echarts图表类型："+type);
 	var chart = echarts.init(document.getElementById(id));
     window.onresize = chart.resize;
     var option=setCharts(type);
@@ -148,6 +91,35 @@ function setCharts(type){
     data1[i]='xt'+i;
     }
     var option = {
+		title:{
+			show : true,
+			text : "标题",
+			link : "#",
+			target: "blank",
+		},
+		toolbox:{
+			feature:{
+				saveAsImage:{
+					type:"jpeg",
+					name:"wang",
+					backgroundColor:"#fff",
+					show:true,
+					title:"保存为jpeg",
+				},
+				dataView:{
+					show: true ,
+					title: "数据视图" ,
+					readOnly: false ,
+					lang: ["数视图","close","update"],
+				},
+				restore:{
+					show:true,
+				},
+				// dataZoom:{
+				// 	show : true,
+				// }
+			}
+		},
         xAxis: {
             type: 'category',
             data:data1
@@ -164,29 +136,7 @@ function setCharts(type){
     }; 
     return option;
 }
-
-// 获取一个chart的信息
-function getItemInfo(obj){
-	// console.log(typeof $(obj).find(".echart_data").val())
-	return $(obj).find(".echart_data").val();
-	// var dragContent=document.getElementById('drag_content');
-	// var dragContentX=dragContent.offsetLeft;
-	// var dragContentY=dragContent.offsetTop;
-	// var objHtml=$(obj).find(".drag_item_header>input").val();
-	// var className=obj.className.split(" ")[1];
-	// var obj=obj.getBoundingClientRect();
-	// var info={
-	// 	"val":objHtml,
-	// 	"type":className,
-	// 	"width":obj.width,
-	// 	"height":obj.height,
-	// 	"left":obj.left-dragContentX,
-	// 	"top":obj.top-dragContentY
-	// };
-	// return info;
-}
-
-// 图表时间列表
+// 图表事件
 function bindEvent(){
 	var $charPannel = $("#drag_content");
 	$charPannel.off('click').on('click', 'i', function(){
@@ -211,7 +161,6 @@ function bindEvent(){
 				$chart.siblings('div').hide();
 				$chart.css({"height": '100%',"width": '100%',"top": 0,"left": 0}).show();
 				echarts.getInstanceByDom($chart.find('.drag_item_box')[0]).resize();
-				// $chart.draggable("disable");
 				break;
 			case 'close': 
 				$chart.empty().remove();
@@ -222,31 +171,30 @@ function bindEvent(){
 	});
 }
 
-// 创造形状
+// 创造其他图形容器
 function createShape(type,left,top){
-	var chartNum;
+	var chartId;
 	var chartType1 = document.createElement("div");
 	chartType1.style.background="inherit";
-	chartType1.style.left=left+"px";
-	chartType1.style.top=top+"px";
-	// var chartName;
+	// chartType1.style.left=left+"px";
+	// chartType1.style.top=top+"px";
 	switch(type)
 	{
-	case 'text':
-	  textNum++;
-	  chartNum="text_shape_"+barChartNum;
-	  chartType1.id=chartNum;
-	  chartType1.className="drag_item text_type";
-	  chartType1.innerHTML='<div class="drag_item_header">'+
-	'<input type="hidden" class="echart_data"/>'+
-	'<div class="drag_item_move"></div>'+
-	'<div class="drag_item_header_action_list">'+
-	'<i class="fa fa-times close_btn" data-type="close" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
-	'<i class="fa fa-repeat rotate_btn" data-type="rotate" data-pid="' + chartNum + '" aria-hidden="true"></i>'+
-	'</div></div><div class="drag_item_box" id="'+chartNum+'_div'+'"><textarea placeholder="请填写" class="text_val"></textarea></div>';
-	  break;
-	default:
-	  break;
+		case 'text':
+			textNum++;
+			chartId="text_shape_"+textNum;
+			chartType1.id=textNum;
+			chartType1.className="drag_item text_type";
+			chartType1.innerHTML='<div class="drag_item_header">'+
+			'<input type="hidden" class="echart_data"/>'+
+			'<div class="drag_item_move"></div>'+
+			'<div class="drag_item_header_action_list">'+
+			'<i class="fa fa-times close_btn" data-type="close" data-pid="' + textNum + '" aria-hidden="true"></i>'+
+			'<i class="fa fa-repeat rotate_btn" data-type="rotate" data-pid="' + textNum + '" aria-hidden="true"></i>'+
+			'</div></div><div class="drag_item_box" id="'+textNum+'_div'+'"><textarea placeholder="请填写" class="text_val"></textarea></div>';
+			break;
+		default:
+			break;
 	}
 	$("#drag_content").append(chartType1);
 	$(chartType1).find(".text_val").change(function(){
@@ -281,3 +229,24 @@ function updateChartInfo(obj){
 	$(obj).find(".echart_data").val(JSON.stringify(data));
 }
 
+// 拖拽图形生成事件--已删除
+// dragShowChartsFn(addBarChart,"bar");
+// dragShowChartsFn(addLineChart,"line")
+// dragShowChartsFn(addScatterChart,"scatter")
+// dragShowChartsFn(addText,"text")
+
+// function dragShowChartsFn(obj,type){
+// 	obj.ondragstart=function(){ // 拖拽开始
+
+// 	}
+	      
+// 	obj.ondragend=function(e){ // 当拖拽结束 ，清空temp
+// 	    var x0=parseInt($("#drag_content").offset().left);
+// 	    var y0=parseInt($("#drag_content").offset().top)
+// 	    if(type=="text"){
+// 	    	createShape(type,(e.clientX-x0),(e.clientY-y0))
+// 	    }else{
+// 			createChart(type,(e.clientX-x0),(e.clientY-y0));	
+// 	    }
+// 	}
+// }
