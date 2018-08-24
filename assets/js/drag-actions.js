@@ -99,12 +99,12 @@ function initFn(){
 };
 
 // 鼠标右键功能
-window.oncontextmenu=function(e){
-	//取消默认的浏览器自带右键 很重要！！
-	e.preventDefault();
-	console.log(e.target)
-	if($(e.target).hasClass("drag_item_move")){
-		console.log("d")
-	}
+// window.oncontextmenu=function(e){
+// 	//取消默认的浏览器自带右键 很重要！！
+// 	e.preventDefault();
+// 	console.log(e.target)
+// 	if($(e.target).hasClass("drag_item_move")){
+// 		console.log("d")
+// 	}
 
-}
+// }

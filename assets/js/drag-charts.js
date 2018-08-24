@@ -1,5 +1,20 @@
 // 拖拽，拉伸图表事件
+console.log("d");
 function drag(){
+	// 自定义拖拽
+	// $( ".drag_item" ).draggable({
+	// 	containment:"#drag_content",
+	// 	opacity:0.5,
+	// 	start: function() {
+		
+	// 	},
+	// 	drag:function(){
+  
+	// 	},	
+	// 	stop: function() {
+	// 		 updateChartInfo(this)
+	// 	 },
+	//   });
 	// 排序拖拽
 	$( "#drag_content" ).sortable();
 	$( "#drag_content" ).disableSelection();
@@ -225,7 +240,6 @@ function updateChartInfo(obj){
 	data.top = $(obj).css("top");
 	data.left = $(obj).css("left");
 	data.bottom = $(obj).css("bottom");
-	// console.log(data)
 	$(obj).find(".echart_data").val(JSON.stringify(data));
 }
 
