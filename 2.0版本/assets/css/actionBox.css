@@ -1,0 +1,20 @@
+.action-container{
+    background: #515151;
+    color: #fff;
+    min-height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+    /* margin-bottom: 20px; */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+.action-item{
+    cursor: pointer;
+    float: left;
+    margin: 0 10px;
+}
+.action-item:hover{
+    text-decoration: underline;
+}

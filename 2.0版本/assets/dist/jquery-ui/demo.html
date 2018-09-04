@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 排序（Sortable） - 默认功能</title>
+  <link rel="stylesheet" href="./jquery-ui.css">
+  <script src="./jquery.js"></script>
+  <script src="./jquery-ui.js"></script>
+  <style>
+  #sortable {position: relative; margin: 0; padding: 10px; width: 60%;border: 1px solid #999 }
+  #sortable .ui-state-default{margin: 5px;width: 60%;position: relative;display: block;}
+  </style>
+  <script>
+  $(function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+    $( ".ui-state-default" ).resizable({
+      minHeight: 50,
+      minWidth: 50,
+      handles:"se,sw,nw,ne,n,e,s,w",
+    });
+  });
+  </script>
+</head>
+<body>
+ 
+<div id="sortable">
+  <div style="width:60px;height:60px" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 0</div>
+  <div class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</div>
+  <div class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</div>
+  <div class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</div>
+  <div class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</div>  
+</div>
+ 
+ 
+</body>
+</html>

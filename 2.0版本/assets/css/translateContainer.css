@@ -1,0 +1,108 @@
+.translate-container{
+    position: fixed;
+    height: 100%;
+    background: #515151;
+    /* width: 400px; */
+    width: 0;
+    top: 0;
+    right: 0;
+    padding-top: 50px;
+    overflow: hidden;
+}
+.translate-container-echarts,
+.translate-container-content{
+    height: 100%;
+}
+.translate-container-closediv{
+    text-align: right;
+    color: #fff;
+    padding-right: 15px;
+    background: #515151;
+}
+
+.translate-container-title{
+    height: 35px;
+    line-height: 35px;
+    color: #fff;
+    text-indent: 5px;
+}
+
+.translate-echarts-left,
+.translate-echarts-right{
+    height: 100%;
+    width: 50%;
+    color: #fff;
+    float: left;
+    background: #515151;
+    text-align: center
+}
+.translate-echarts-left{
+    border-right:1px solid #999; 
+}
+.translate-echarts-title,
+.translate-shapes-title{
+    font-size: 20px;
+    text-align: left;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 0;
+    text-indent: 10px;
+    color: #fff;
+    border-bottom:1px solid #999; 
+}
+
+.translate-echarts-edit-item {
+    margin: 10px auto;
+}
+
+.translate-echarts-edit-item > p{
+    font-weight: 700;
+    border-bottom:1px solid #999;
+    text-align: left;
+    height: 35px;
+    font-size:13px;
+    line-height: 35px; 
+    text-indent: 10px;
+}
+
+.translate-echarts-item-li{
+    border: 1px dashed #999;
+    height: 30px;
+    line-height: 30px;
+    border-radius:5px;
+    width: 80%;
+    margin: 5px auto; 
+}
+
+.translate-shapes-itembox{
+    padding: 10px;
+    color: #fff;
+}
+.translate-shapes-itembox{
+    background: inherit;
+    resize: none;
+    width: 90%;
+    margin: 0px auto;
+    height: 100px;
+}
+
+.translate-echarts-nav{
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    text-align: left;
+    overflow: hidden;
+}
+.translate-echarts-nav>a{
+    width: 50%;
+    display: inline-block;
+    float: left;
+    /* background: #656565; */
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 100;
+}
+.active-nav{
+    background: #656565;
+}

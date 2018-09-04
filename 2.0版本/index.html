@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>配置界面</title>
+    
+    <link rel="stylesheet" href="./assets/dist/bootstrap-3.2.0/bootstrap-3.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/dist/gridstack/gridstack.css"/>
+
+    <script src="./assets/dist/jquery.js"></script>
+    <script src="./assets/dist/jquery-ui/jquery-ui.js"></script>
+    <script src="./assets/dist/bootstrap-3.2.0/bootstrap-3.2.0/dist/js/bootstrap.js"></script>
+    <script src="./assets/dist/lodash.min.js"></script>
+    <script src="./assets/dist/gridstack/gridstack.js"></script>
+    <script src="./assets/dist/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="./assets/dist/echasts/echarts.js"></script>    
+
+    <link rel="stylesheet" href="./assets/dist/font-awesome-4.7.0/css/font-awesome.css"/>    
+    <link rel="stylesheet" href="./assets/css/common.css"/>
+    <link rel="stylesheet" href="./assets/css/board.css"/>
+    <link rel="stylesheet" href="./assets/css/actionBox.css"/>
+    <link rel="stylesheet" href="./assets/css/navBox.css"/>
+    <link rel="stylesheet" href="./assets/css/translateContainer.css"/>
+    <style>
+        .active-item-div{border: 1.5px dashed red}
+    </style>
+</head>
+<body>
+    <div class="action-container">
+        <ul class="action-list">
+            <li class="action-item" id="add-barchart-btn">                        
+                增加柱形图
+            </li>
+            <li class="action-item" id="add-linechart-btn">                        
+                增加折线图
+            </li>
+            <li class="action-item" id="add-scatterchart-btn">                        
+                增加散点图
+            </li>
+            <li class="action-item" id="add-squarediv-btn">                        
+                增加正方形
+            </li>
+            <li class="action-item" id="add-cirdiv-btn">                        
+                增加圆形
+            </li>
+            <li class="action-item" id="add-maintitle-btn">                        
+                增加主标题
+            </li>
+            <li class="action-item" id="add-secondtitle-btn">                        
+                增加二级标题
+            </li>
+            <li class="action-item" id="add-contenttitle-btn">                        
+                增加正文文字
+            </li>
+            <li class="action-item" id="setting-grid-btn">                        
+                网格化
+            </li>
+            <li class="action-item" id="saveInfo-btn">                        
+                保存
+            </li>
+            <li class="action-item" id="loadInfo-btn">                        
+                加载
+            </li>
+            <li class="action-item unabledBtn" id="backInfo-btn">                        
+                回退
+            </li>
+            <li class="action-item" id="clear-btn">                        
+                清空
+            </li>
+        </ul>
+    </div>
+    <div class="nav-container">
+        <ul class="nav-list">
+            <li class="nav-item" id="setting-nav">                        
+                <i class="fa fa-cog" aria-hidden="true"></i>
+            </li>
+            <li class="nav-item" id="echarts-nav">                        
+                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+            </li>
+            <li class="nav-item" id="shape-nav">                        
+                <i class="fa fa-square-o" aria-hidden="true"></i>
+            </li>
+            <li class="nav-item" id="media-nav">
+                <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+            </li>
+        </ul>
+        <div class="nav-box setting-nav" style="display:none">
+            <div class="nav-box-title">
+                <span>设置</span>
+                <i class="fa fa-close nav-box-closeBtn" aria-hidden="true" ></i>
+            </div>
+        </div>
+        <div class="nav-box echarts-nav" style="display:none">
+            <div class="nav-box-title">
+                <span>插入图表</span>
+                <i class="fa fa-close nav-box-closeBtn" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="nav-box shape-nav" style="display:none">
+            <div class="nav-box-title">
+                <span>插入图形</span>
+                <i class="fa fa-close nav-box-closeBtn" aria-hidden="true" ></i>
+            </div>
+        </div>
+        <div class="nav-box media-nav" style="display:none">
+            <div class="nav-box-title">
+                <span>插入多媒体</span>
+                <i class="fa fa-close nav-box-closeBtn" aria-hidden="true"></i>
+            </div>
+            <div class="nav-box-content">
+                <p class="nav-box-content-title">
+                    <i class="fa fa-image" aria-hidden="true"></i>&nbsp;&nbsp;图像</p>
+                <div class="nav-box-content-row">
+                    <input id="nav-newimg-title" type="text" placeholder="输入图片的标题（可选）"/>
+                </div>
+                <div class="nav-box-content-row">
+                    <input id="nav-newimg-description" type="text" placeholder="输入图片的注释（可选）"/>
+                </div>
+                <div class="nav-box-btn-row">
+                    <input type="file" id="nav-newimg-file"/>
+                    <button id="nav-imgUpdate-btn" class="nav-btn">本地上传</button>
+                </div>
+                <div class="nav-box-btn-row">
+                    <button id="nav-imgInput-btn" class="nav-btn">插入图片</button>
+                </div>
+                <div class="nav-box-content-row">
+                    <img src="#" id="nav-preimg"/>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="board_container">
+        <div class="grid-stack ">
+            <!-- 主标题 -->
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="2" data-gs-width="12" data-gs-height="2">
+                <div class="grid-stack-item-content mainTitle" >
+                    <div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
+                    <input class="mainTitle-input" id="mainTitle-1" value="主标题" placeholder="请填写主标题"/> 
+                    <div class="shadow-bg">
+                        <div class="shadow-bg-title">
+                            <span class="shadow-close-btn">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="shadow-bg-content">
+                            双击编辑内容
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 二级标题 -->
+            <!-- <div class="grid-stack-item" data-gs-x="0" data-gs-y="1" data-gs-width="12" data-gs-height="2">
+                    <div class="grid-stack-item-content secondTitle">
+                        <input class="secondTitle-input"  id="secondTitle-2" value="二级标题" placeholder="请填写二级标题"/> 
+                        <div class="shadow-bg">
+                            <div class="shadow-bg-title">
+                                <span class="shadow-close-btn">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <div class="shadow-bg-content">
+                                双击编辑内容
+                            </div>
+                        </div>
+                    </div>
+            </div> -->
+            <!-- 正文 -->
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="3" data-gs-width="12" data-gs-height="2">
+                <div class="grid-stack-item-content contentTitle" >
+                    <div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
+                    <textarea style="overflow:visible" id="contentTitle-1" class="contentTitle-input"  placeholder="请填写正文">正文</textarea> 
+                    <div class="shadow-bg">
+                        <div class="shadow-bg-title">
+                            <span class="shadow-close-btn">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="shadow-bg-content">双击编辑内容</div>
+                    </div>
+                </div>
+            </div>
+            <!-- echarts -->
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="5" data-gs-width="6" data-gs-height="4">
+                <div class="grid-stack-item-content">
+                    <div class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value="未命名"/></div>                    
+                    <div class="lineChart"  id="lineChart-1" style="padding: 20px;width:100%;height: 90%;overflow: hidden;">
+                    </div>
+                    <div class="shadow-bg">
+                        <div class="shadow-bg-title">
+                            <span class="shadow-close-btn">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="shadow-bg-content">
+                            双击编辑内容
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 方形 -->
+            <div class="grid-stack-item" data-gs-x="7" data-gs-y="10" data-gs-width="4" data-gs-height="4">
+                <div class="grid-stack-item-content shape-box" >
+                    <div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
+                    <div class="shape-box-content squareShape" id="squareShape-1">
+                        <textarea>输入文本</textarea>
+                    </div>
+                    <div class="shadow-bg">
+                        <div class="shadow-bg-title">
+                            <span class="shadow-close-btn">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="shadow-bg-content">
+                            双击编辑内容
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="translate-container">
+        <div class="translate-container-closediv">
+            <i class="fa fa-close curHand translate-container-closeBtn" aria-hidden="true"></i>
+        </div>
+        <div class="translate-container-echarts">
+            <div class="translate-container-content">
+                <div class="translate-echarts-left">
+                    <p class="translate-echarts-title">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>图表可视化编辑
+                    </p>
+                    <nav class="translate-echarts-nav">
+                        <a href="javascript:void(0)" class="translate-echarts-datanav">数据</a>
+                        <a href="javascript:void(0)" class="translate-echarts-stylenav active-nav">样式</a>
+                    </nav>
+                    <div class="translate-echarts-edit-box">
+                        <div class="translate-echarts-data" style="display:none">
+                                <div class="translate-echarts-edit-item">
+                                        <p>类别（维度）</p>
+                                        <ul>
+                                            <li  class="translate-echarts-item-li">
+                                                <div>加入字段</div>
+                                            </li>
+                                        </ul>
+                                       </div>
+                                       <div class="translate-echarts-edit-item">
+                                           <p>柱图值（指标）</p>
+                                           <ul>
+                                                   <li  class="translate-echarts-item-li">
+                                                       <div>加入字段</div>
+                                                   </li>
+                                               </ul>
+                                       </div>
+                                       <div class="translate-echarts-edit-item">
+                                           <p>过滤条件</p>
+                                           <ul>
+                                                   <li  class="translate-echarts-item-li">
+                                                       <div>加入字段</div>
+                                                   </li>
+                                               </ul>
+                                       </div>
+                                       <div class="translate-echarts-edit-item">
+                                           <p>排序条件</p>
+                                           <ul>
+                                                   <li  class="translate-echarts-item-li">
+                                                       <div>加入字段</div>
+                                                   </li>
+                                               </ul>
+                                       </div>
+                        </div>
+                        <div class="translate-echarts-style ">
+                            <div class="translate-echarts-edit-item" style="text-align: left;padding: 5px 20px;">
+                                <p>级联 <input type="checkbox" onclick="onSelectItem(this, 0)" /></p>
+                                <div id="uiId">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="translate-echarts-style ">
+                            <div class="translate-echarts-edit-item" style="text-align: left;padding: 5px 20px;">
+                                <p>联动 <input type="checkbox" onclick="onSelectItem(this, 1)" /></p>
+                                <div id="uiId1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="translate-echarts-style ">
+                                <div class="translate-echarts-edit-item" style="text-align: left;padding: 5px 20px;">
+                                    <p>下钻 <input type="checkbox" onclick="onSelectItem(this, 2)" id="translate-echarts-edit-item3"/></p>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="translate-echarts-right">
+                    <p class="translate-echarts-title">
+                    <i class="fa fa-bar-chart" aria-hidden="true"></i>数据源
+                    </p>
+                    <div class="translate-echarts-edit-box">
+                            <div class="translate-echarts-edit-item">
+                             <p>数据源选择</p>
+                             <ul>
+                                 <li  class="translate-echarts-data-li">
+                                     <div>database1</div>
+                                 </li>
+                             </ul>
+                            </div>
+                        </div>              
+                </div>
+            </div>
+        </div>
+        <div class="translate-container-shapes">
+            <div class="translate-container-content">
+                
+                <p class="translate-shapes-title">
+                    <i class="fa fa-object-group" aria-hidden="true"></i> 图形可视化编辑
+                </p>
+                <div class="translate-shapes-itembox">
+                    <p>编辑内容&nbsp;&nbsp;<a href="#">同步</a></p>
+                    <textarea class="translate-shapes-itembox" id="translate-shapes-itembox"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <textarea id="save-info-textarea" style="position: absolute;top: 120px;left: 80px;min-height: 300px;width: 200px;">
+    </textarea>
+    <script type="text/javascript" src="./assets/js/addEvents.js"></script>
+    <script type="text/javascript" src="./assets/js/settingEvent.js"></script>
+    <script type="text/javascript" src="./assets/js/itemsEvent.js"></script>
+    <script type="text/javascript">
+        var _temp_report_total_info_edit = {};
+       var barNum=1,lineNum=1,scatterNum=1;
+       var squareNum=1,cirNum=1;
+       var mainTitleNum=1,secondTitleNum=1,contentTitleNum=1;
+       var _temp_report_total_info_edit={};
+        function onSelectItem(_this, type) {
+            switch (type) {
+                case 0:
+                    var ulObj = $("#uiId");
+                    if($(_this).is(':checked')) {
+                        var items = saveChartInfo();
+                        var options = "";
+                        for (var index in items) {
+                            options += "<option value='"+items[index].id+"' >" + items[index].id + "</option>";
+                        }
+                        var html = "<select onchange='onItemChange(this)' >" + options + "</select>";
+                        ulObj.append(html);
+                    } else {
+                        ulObj.empty();
+                    }
+                    break;
+                case 1:
+                    var ulObj1 = $("#uiId1");
+                    if($(_this).is(':checked')) {
+                        var items = saveChartInfo();
+                        var options = "";
+                        for (var index in items) {
+                            options += "<option value='"+items[index].id+"' >" + items[index].id + "</option>";
+                        }
+                        var html = "<select onchange='onItemChange(this, true)' >" + options + "</select>";
+                        ulObj1.append(html);
+                    } else {
+                        ulObj1.empty();
+                    }
+                    break;
+                case 2:
+                    // var ulObj1 = $("#uiId1");
+                    var activeItemId = getActiveItemDivId();
+                    var myChart = echarts.init(document.getElementById(activeItemId));
+                    if($(_this).is(':checked')) {
+                        myChart.on('click', function (params) {
+                            console.log("echarts的数据对象:")
+                            console.log('x：'+params.dataIndex);
+                            console.log('y：'+params.data);
+                            drawCharts(activeItemId,'line');
+                        });
+                        console.log("open")
+                    } else {
+                        myChart.off('click');
+                        console.log("close");
+                    }
+                    break;
+                default :
+                    break;
+            }
+
+        }
+
+       $(function () {
+            var options = {
+                cellHeight:50,
+                disableDrag:false,
+                resizable :{autoHide: true, handles: 'n, e, s, w, ne, se, sw, nw'}
+            };
+            $('.grid-stack').gridstack(options);
+            drawCharts("lineChart-1","line");
+            grid = $('.grid-stack').data('gridstack');
+
+            var globalInfoList=[];
+            var newbool=false;
+            $('.grid-stack').on('change', function(event, items) {
+                if(!newbool){
+                     // console.log("change");
+                    var infoList=saveChartInfo();
+                    if(globalInfoList.length==10){
+                        globalInfoList.shift();
+                    }
+                    globalInfoList.push(infoList);
+                    if(globalInfoList.length>1){
+                        $("#backInfo-btn").removeClass("unabledBtn");
+                    }
+                    // console.log(globalInfoList);
+                }
+            });
+            $("#backInfo-btn").click(function(){
+                console.log(globalInfoList);
+                if(globalInfoList.length>1){
+                    var info=globalInfoList[globalInfoList.length-2];
+                    info=JSON.stringify(info);
+                    console.log(info);
+                    newbool=true;
+                    updateChartInfo(info);
+                    newbool=false;
+                    // console.log(globalInfoList);
+                    globalInfoList.length--;
+                    // globalInfoList[globalInfoList.length-1].pop();
+                    console.log(globalInfoList);
+                    console.log(globalInfoList.length);
+                    if(globalInfoList.length==1){
+                        $("#backInfo-btn").addClass("unabledBtn");
+                    }else{
+                        $("#backInfo-btn").removeClass("unabledBtn");
+                    }
+
+                }else{
+                    alert("无回退记录")
+                }
+            });
+
+            addEchartsEvent(grid);//添加echarts
+            addShapesEvent(grid);//添加图形
+            addTitlesEvent(grid);//添加标题
+
+            settingEvent(grid);//全局功能
+            itemsEvent(grid); //每个模块的事件
+        });
+        function getActiveItemDivId(){
+        var id=$(".active-item-div").children()[1].id;
+        return id;
+        console.log(id);
+    }
+   function onItemChange(_this, type){
+       var itemId = $(_this).val();
+       var activeItemId = getActiveItemDivId();
+       var activeii = echarts.getInstanceByDom(document.getElementById(activeItemId));
+       var tragetii = echarts.getInstanceByDom(document.getElementById(itemId));
+       if (type) {
+           //activeii.connect([tragetii]);
+           echarts.connect([activeii, tragetii]);
+       } else {
+           activeii.on('legendselectchanged', function (params) {
+               var isSelected = params.selected[params.name];
+               if(isSelected) {
+                   tragetii.dispatchAction({
+                       type:'legendSelect',
+                       name:params.name
+                   });
+               } else {
+                   tragetii.dispatchAction({
+                       type:'legendUnSelect',
+                       name:params.name
+                   });
+               }
+           });
+       }
+
+   }
+</script>
+</body>
+</html>
