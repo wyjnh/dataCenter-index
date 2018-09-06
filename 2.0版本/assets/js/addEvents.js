@@ -1,7 +1,6 @@
 // 添加标题事件
 function addTitlesEvent(grid){
     $("#add-maintitle-btn").click(function(){
-        mainTitleNum++;
         var el=drawTitlesBox("mainTitle",mainTitleNum)[0];
         var titleId=drawTitlesBox("mainTitle",mainTitleNum)[1]
         grid.addWidget(el, 0, 0, 12, 2, true);
@@ -9,7 +8,6 @@ function addTitlesEvent(grid){
         itemsEvent(grid); //每个模块的事件
     });
     $("#add-secondtitle-btn").click(function(){
-        secondTitleNum++;
         var el=drawTitlesBox("secondTitle",secondTitleNum)[0];
         var titleId=drawTitlesBox("secondTitle",secondTitleNum)[1]
         grid.addWidget(el, 0, 0, 12, 2, true);
@@ -17,7 +15,6 @@ function addTitlesEvent(grid){
         itemsEvent(grid); //每个模块的事件
     });
     $("#add-contenttitle-btn").click(function(){
-        contentTitleNum++;
         var el=drawTitlesBox("contentTitle",contentTitleNum)[0];
         var titleId=drawTitlesBox("contentTitle",contentTitleNum)[1]
         grid.addWidget(el, 0, 0, 12, 2, true);
@@ -45,36 +42,21 @@ function drawTitlesBox(type,num){
         default :
             break;
     }
-    if(className=="contentTitle"){
+    // if(className=="contentTitle"){
         var el='<div class="grid-stack-item">'+
-                '<div class="grid-stack-item-content '+className+'" >'+
-                    '<textarea class="'+className+'-input" id="'+Id+'" placeholder="请填写'+text+'">'+text+'</textarea>'+
-                    '<div class="shadow-bg">'+
-                        '<div class="shadow-bg-title">'+
-                            '<span class="shadow-close-btn">'+
-                                '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
-                            '</span>'+
-                        '</div>'+
-                        '<div class="shadow-bg-content">双击编辑内容</div>'+
-                    '</div>'+
+                '<div class="grid-stack-item-content '+className+'">'+
+                '<div class="grid-stack-item-title" style="display:none"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>'+                    
+                '<div class="'+className+'" id="'+Id+'">'+text+'</div>'+
+                '<div class="shadow-bg ckeditor-shadow">'+
+                '<div class="shadow-bg-title">'+
+                    '<span class="shadow-close-btn">'+
+                        '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
+                    '</span>'+
                 '</div>'+
-            '</div>';
-    }else{
-        var el='<div class="grid-stack-item">'+
-                '<div class="grid-stack-item-content '+className+'" >'+
-                    '<input class="'+className+'-input" id="'+Id+'" value="'+text+'" placeholder="请填写'+text+'"/>'+
-                    '<div class="shadow-bg">'+
-                        '<div class="shadow-bg-title">'+
-                            '<span class="shadow-close-btn">'+
-                                '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
-                            '</span>'+
-                        '</div>'+
-                        '<div class="shadow-bg-content">双击编辑内容</div>'+
-                    '</div>'+
-                '</div>'+
-            '</div>';    
-    }
-    
+                '<div class="shadow-bg-content">双击编辑内容</div>'+
+            '</div>'+
+        '</div>'+
+    '</div>';
     var data=[el,Id];
     return data;
 };
@@ -93,7 +75,7 @@ function addShapesEvent(grid){
         cirNum++;
         var el=drawShapesBox("cirShape",squareNum)[0];
         var squareId=drawShapesBox("cirShape",squareNum)[1]
-        grid.addWidget(el, 0, 0, 4, 4, true);
+        grid.addWidget(el, 0, 0, 3, 3, true);
         settingEvent(grid);
         itemsEvent(grid); //每个模块的事件
     })
@@ -114,21 +96,19 @@ function drawShapesBox(type,num){
             break;
     }
     
-    var el=' <div class="grid-stack-item">'+
-                '<div class="grid-stack-item-content shape-box">'+
-                    '<div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>'+                    
-                    '<div class="shape-box-content '+className+'" id="'+shapeId+'"">'+
-                        '<textarea>输入文本</textarea>'+
-                    '</div>'+
-                    '<div class="shadow-bg">'+
-                        '<div class="shadow-bg-title">'+
-                            '<span class="shadow-close-btn">'+
-                                '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
-                            '</span>'+
-                        '</div>'+
-                        '<div class="shadow-bg-content">双击编辑内容</div>'+
-                    '</div>'+
-                '</div>'+
+    var el= '<div class="grid-stack-item">'+
+            '<div class="grid-stack-item-content shape-box">'+
+            '<div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>'+                    
+            '<div class="shape-box-content '+className+'" id="'+shapeId+'">输入文本</div>'+
+            '<div class="shadow-bg">'+
+            '<div class="shadow-bg-title">'+
+                '<span class="shadow-close-btn">'+
+                    '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
+                '</span>'+
+            '</div>'+
+            '<div class="shadow-bg-content">双击编辑内容</div>'+
+            '</div>'+
+            '</div>'+
             '</div>';
     var data=[el,shapeId];
     console.log(data)
@@ -138,29 +118,26 @@ function drawShapesBox(type,num){
 // 添加图标事件
 function addEchartsEvent(grid){
     $("#add-barchart-btn").click(function(){
-        // barNum++;
-        var el=drawChartsBox("barChart",barNum)[0];
-        var echartsId=drawChartsBox("barChart",barNum)[1]
+        var el=drawChartsBox("barChart")[0];
+        var echartsId=drawChartsBox("barChart")[1]
         grid.addWidget(el, 0, 0, 12, 4, true);
         drawCharts(echartsId,"bar");
         settingEvent(grid);
         itemsEvent(grid); //每个模块的事件
     })
     $("#add-linechart-btn").click(function(){
-        // lineNum++;
-        var el=drawChartsBox("lineChart",lineNum)[0];
-        var echartsId=drawChartsBox("lineChart",lineNum)[1]
+        var el=drawChartsBox("lineChart")[0];
+        var echartsId=drawChartsBox("lineChart")[1]
         console.log(el)
         console.log(echartsId)
-        grid.addWidget(el, 0, 0, 2, 4, true);
+        grid.addWidget(el, 0, 0, 12, 4, true);
         drawCharts(echartsId,"line");
         settingEvent(grid);
         itemsEvent(grid); //每个模块的事件
     })
     $("#add-scatterchart-btn").click(function(){
-        scatterNum++;
-        var el=drawChartsBox("scatterChart",lineNum)[0];
-        var echartsId=drawChartsBox("scatterChart",lineNum)[1]
+        var el=drawChartsBox("scatterChart")[0];
+        var echartsId=drawChartsBox("scatterChart")[1]
         grid.addWidget(el, 0, 0, 12, 4, true);
         drawCharts(echartsId,"scatter");
         settingEvent(grid);
@@ -168,12 +145,12 @@ function addEchartsEvent(grid){
     })
 }
 // 组成图图表盒子
-function drawChartsBox(type,num){
+function drawChartsBox(type){
     // var chartId=type+"-"+num;
     var chartId=type+'-'+Date.parse(new Date());
     var barEl=' <div class="grid-stack-item">'+
                 '<div class="grid-stack-item-content" >'+
-                    '<div class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value="未命名"/></div>'+
+                    '<div class="grid-stack-item-title"><input class="grid-stack-item-name" maxlength="15" placeholder="请输入标题" value="未命名"/></div>'+
                     '<div class="'+type+'" id="'+chartId+'" style="padding: 20px;width:100%;height: 90%;overflow: hidden;"></div>'+
                     '<div class="shadow-bg">'+
                         '<div class="shadow-bg-title">'+

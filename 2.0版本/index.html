@@ -16,6 +16,8 @@
     <script src="./assets/dist/gridstack/gridstack.js"></script>
     <script src="./assets/dist/gridstack/gridstack.jQueryUI.js"></script>
     <script src="./assets/dist/echasts/echarts.js"></script>    
+    <script src="./assets/dist/ckeditor/ckeditor.js"></script>    
+
 
     <link rel="stylesheet" href="./assets/dist/font-awesome-4.7.0/css/font-awesome.css"/>    
     <link rel="stylesheet" href="./assets/css/common.css"/>
@@ -132,14 +134,16 @@
             </div>
         </div>
     </div>
-    <div class="board_container">
+    <div class="board_container" style="position:relative">
         <div class="grid-stack ">
             <!-- 主标题 -->
             <div class="grid-stack-item" data-gs-x="0" data-gs-y="2" data-gs-width="12" data-gs-height="2">
-                <div class="grid-stack-item-content mainTitle" >
-                    <div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
-                    <input class="mainTitle-input" id="mainTitle-1" value="主标题" placeholder="请填写主标题"/> 
-                    <div class="shadow-bg">
+                <div class="grid-stack-item-content mainTitle" style="overflow:visible">
+                    <div class="grid-stack-item-title" style="display:none"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
+                    <div class="mainTitle-input" id="mainTitle-1">
+                        主标题
+                    </div>
+                    <div class="shadow-bg ckeditor-shadow" id="sha1">
                         <div class="shadow-bg-title">
                             <span class="shadow-close-btn">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -152,9 +156,12 @@
                 </div>
             </div>
             <!-- 二级标题 -->
-            <!-- <div class="grid-stack-item" data-gs-x="0" data-gs-y="1" data-gs-width="12" data-gs-height="2">
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="1" data-gs-width="12" data-gs-height="2">
                     <div class="grid-stack-item-content secondTitle">
-                        <input class="secondTitle-input"  id="secondTitle-2" value="二级标题" placeholder="请填写二级标题"/> 
+                    <div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
+                        <div class="secondTitle-input" id="secondTitle-2">
+                        二级标题
+                        </div>
                         <div class="shadow-bg">
                             <div class="shadow-bg-title">
                                 <span class="shadow-close-btn">
@@ -166,12 +173,14 @@
                             </div>
                         </div>
                     </div>
-            </div> -->
+            </div>
             <!-- 正文 -->
             <div class="grid-stack-item" data-gs-x="0" data-gs-y="3" data-gs-width="12" data-gs-height="2">
                 <div class="grid-stack-item-content contentTitle" >
                     <div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
-                    <textarea style="overflow:visible" id="contentTitle-1" class="contentTitle-input"  placeholder="请填写正文">正文</textarea> 
+                    <div id="contentTitle-1" class="contentTitle-input">
+                        请填写正文
+                    </div>
                     <div class="shadow-bg">
                         <div class="shadow-bg-title">
                             <span class="shadow-close-btn">
@@ -185,7 +194,7 @@
             <!-- echarts -->
             <div class="grid-stack-item" data-gs-x="0" data-gs-y="5" data-gs-width="6" data-gs-height="4">
                 <div class="grid-stack-item-content">
-                    <div class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value="未命名"/></div>                    
+                    <div class="grid-stack-item-title"><input class="grid-stack-item-name" maxlength="15" placeholder="请输入标题" value="未命名"/></div>                    
                     <div class="lineChart"  id="lineChart-1" style="padding: 20px;width:100%;height: 90%;overflow: hidden;">
                     </div>
                     <div class="shadow-bg">
@@ -205,7 +214,7 @@
                 <div class="grid-stack-item-content shape-box" >
                     <div style="display:none" class="grid-stack-item-title"><input class="grid-stack-item-name" placeholder="请输入标题" value=""/></div>                    
                     <div class="shape-box-content squareShape" id="squareShape-1">
-                        <textarea>输入文本</textarea>
+                        输入文本
                     </div>
                     <div class="shadow-bg">
                         <div class="shadow-bg-title">
@@ -219,6 +228,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="ckEditor-box" style="position:absolute;width:100%;top:0;z-index: 4;display: none">
+            <textarea id="description" style="width:100%"></textarea>
         </div>
     </div>
     <div class="translate-container">
@@ -321,18 +333,19 @@
             </div>
         </div>
     </div>
+    
+       
     <textarea id="save-info-textarea" style="position: absolute;top: 120px;left: 80px;min-height: 300px;width: 200px;">
     </textarea>
     <script type="text/javascript" src="./assets/js/addEvents.js"></script>
     <script type="text/javascript" src="./assets/js/settingEvent.js"></script>
     <script type="text/javascript" src="./assets/js/itemsEvent.js"></script>
     <script type="text/javascript">
-        var _temp_report_total_info_edit = {};
-       var barNum=1,lineNum=1,scatterNum=1;
-       var squareNum=1,cirNum=1;
-       var mainTitleNum=1,secondTitleNum=1,contentTitleNum=1;
-       var _temp_report_total_info_edit={};
-        function onSelectItem(_this, type) {
+    // 存储所有信息的全局变量
+    var _temp_report_total_info_edit = {};
+
+    //    下钻级联等事件
+    function onSelectItem(_this, type) {
             switch (type) {
                 case 0:
                     var ulObj = $("#uiId");
@@ -385,7 +398,9 @@
 
         }
 
-       $(function () {
+    $(function () {
+
+            // 初始化配置页面
             var options = {
                 cellHeight:50,
                 disableDrag:false,
@@ -394,7 +409,8 @@
             $('.grid-stack').gridstack(options);
             drawCharts("lineChart-1","line");
             grid = $('.grid-stack').data('gridstack');
-
+            
+            // 上一步事件
             var globalInfoList=[];
             var newbool=false;
             $('.grid-stack').on('change', function(event, items) {
@@ -435,20 +451,57 @@
                     alert("无回退记录")
                 }
             });
+            
+            // 其他事件
 
             addEchartsEvent(grid);//添加echarts
             addShapesEvent(grid);//添加图形
             addTitlesEvent(grid);//添加标题
-
             settingEvent(grid);//全局功能
             itemsEvent(grid); //每个模块的事件
+            
+            // 初始化富文本
+            var a=CKEDITOR.replace( 'description',
+            {    height: '100px',
+                width:'100%',
+                toolbar :
+                [
+                    //加粗     斜体，     下划线      穿过线      下标字        上标字
+                    ['Bold','Italic','Underline','Strike','Subscript','Superscript'],
+                    // 数字列表          实体列表            减小缩进    增大缩进
+                    ['NumberedList','BulletedList','-','Outdent','Indent'],
+                    //左对 齐             居中对齐          右对齐          两端对齐
+                    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                    //超链接  取消超链接 锚点
+                    ['Link','Unlink','Anchor'],
+                    //图片    flash    表格       水平线            表情       特殊字符        分页符
+                    ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+                    '/',
+                    // 样式       格式      字体    字体大小
+                    ['Styles','Format','Font','FontSize'],
+                    //文本颜色     背景颜色
+                    ['TextColor','BGColor'],
+                    //全屏           显示区块
+                    ['Maximize', 'ShowBlocks','-']
+                ]
+            }
+            );
+            $('body').dblclick(function(e){
+                if(e.target){
+                    ckEditorHide();  
+                } 
+            });
         });
-        function getActiveItemDivId(){
+    
+    // 获取当前激活组件的id
+    function getActiveItemDivId(){
         var id=$(".active-item-div").children()[1].id;
         return id;
         console.log(id);
     }
-   function onItemChange(_this, type){
+
+    // 下钻，级联等功能
+    function onItemChange(_this, type){
        var itemId = $(_this).val();
        var activeItemId = getActiveItemDivId();
        var activeii = echarts.getInstanceByDom(document.getElementById(activeItemId));

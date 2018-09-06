@@ -81,6 +81,7 @@
     display: flex;
     align-items: center;
     justify-content: start;
+    padding: 10px;
 }
 .secondTitle-input{
     text-indent: 15px;
@@ -89,11 +90,12 @@
     background: inherit;
     outline: none;
     width: 100%;
+    padding: 10px;
 }
 /* 正文 */
 .contentTitle{
     box-sizing: border-box;
-    padding: 15px;
+    padding: 10px;
     font-size: 15px;
     color: #282828;
     display: flex;
@@ -110,8 +112,10 @@
 }
 
 .shape-box{
-    padding: 5px;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .cirShape,
 .squareShape{
@@ -124,18 +128,11 @@
 .cirShape{
     border-radius:60%; 
 }
-.shape-box-content >textarea{
-    min-height: 40px;
-    line-height: 40px;
-    width: 80%;
+.shape-box-content{
+    width: 95%;
+    height: 95%;
     border: none;
-    background: inherit;
     color: #fff;
-    text-indent:15px;
-    border: 1px dashed #fff;
-    outline: none;
-    resize: none;
-    text-align: center
 }
 .bg-grid{
     background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 0px), linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 0px);
