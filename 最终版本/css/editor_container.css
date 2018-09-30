@@ -1,0 +1,85 @@
+.editor-container{
+    width: 800px;
+    min-height: 600px;
+    margin: 60px auto;
+    border: 1px solid #999;
+    padding: 20px;
+    position: relative;
+    box-sizing: content-box;
+}
+.grid-stack-item-content{
+
+}
+.dashed-border{
+    border: 1px dashed #999;
+}
+.grid-stack-item-shadow{
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    color: #ffffff;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.5);
+    z-index: 0;
+}
+.shadow-bg-title{
+    position: absolute;
+    height: 30px;
+    width: 100%;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: right;
+    padding: 0 15px;
+}
+.shadow-bg-content{
+    font-size: 30px;
+    font-weight: 700;
+    display: flex;
+    line-height: 100%;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+.grid-stack-item-val{
+    height: 100%;
+}
+.grid-stack-item-img{
+    height: 100%;
+    width: 100%;
+}
+.grid-stack-item-name{
+    height: 10%;
+    top: 0;
+    font-size: 10px;
+    position: absolute;
+}
+
+/*主标题样式*/
+.main-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: rgb(222,40,86);
+    font-weight: 700;
+}
+/*段落1样式*/
+.p-title{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    font-size: 20px;
+    color: rgb(112, 104, 124);
+    font-weight: 700;
+    padding: 10px;
+}
+.active-item{
+    border: 1px dashed red;
+}
+.input-type1{
+    width: 90%;
+    margin: 0 auto;
+}

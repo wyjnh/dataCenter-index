@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+ul li{list-style: none}
+html body{height: 100%}
+.fr{float: right}
+
+.bg-grid {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 0px), linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 0px);
+    background-size: 15px 15px;
+}
+.fa{cursor: pointer}
+
+.unabledBtn{
+    color: #c4c1c1;
+}
+.wrap-container{
+    border-left: 1px solid green;
+    position: fixed;
+    right: 150px;
+    top: 80px;
+}
+.wpn-list{
+    min-height: 30px;
+    position: relative;
+}
+.wpn-point-top{
+    width: 10px;
+    height: 10px;
+    border-radius: 60%;
+    background: green;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+}
+.wpn-point{
+    width: 10px;
+    height: 10px;
+    border-radius: 60%;
+    background: green;
+    position: absolute;
+    bottom: -5px;
+    left: -5px;
+}
+.wpn-content{
+    position: absolute;
+    padding-left: 10px;
+    width: 100px;
+    text-indent: 5px;
+    min-height: 30px;
+    line-height: 110%;
+    cursor: pointer;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+	<script type="text/javascript" src="e4/echarts.min.js"></script>
+</head>
+<body>
+<div id="echarts_1" style="width: 1200px;height:200px;"></div>
+</body>
+</html>
+<script>
+function setCharts(){
+    var data1=new Array();
+    var data2=new Array();
+    for(var i=0;i<365;i++){//525600
+    data2[i]=Math.random()*10000;
+    data1[i]='xt'+i;
+    }
+    var option = {
+        xAxis: {
+            type: 'category',
+            data:data1
+        },
+        yAxis: {
+            type: 'value'
+        },
+        animation:false,
+        tooltip:{show:true,trigger: 'axis'},
+        series: [{
+            data:data2,
+            // type: 'bar',
+            // type: 'line',
+            type: 'scatter',
+        }]
+    }; 
+    return option;
+}
+
+function showCharts(divid){
+	var chart = echarts.init(document.getElementById(divid));
+    window.onresize = chart.resize;
+    var option=setCharts();
+    chart.setOption(option,true);
+}
+showCharts("echarts_1")
+</script>
